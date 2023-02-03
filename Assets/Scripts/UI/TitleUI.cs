@@ -6,13 +6,20 @@ using UnityEngine.UI;
 
 public class TitleUI : MonoBehaviour
 {
+
+    public GameObject optionPanel;
+
     public void StartGame()
     {
         SceneManager.LoadScene("Scenes/StoryBridgeScene");
     }
-    public void Option()
+    public void OptionOpen()
     {
-        
+        optionPanel.SetActive(true);
+    }
+    public void OptionClose()
+    {
+        optionPanel.SetActive(false);
     }
     public void OutGame()
     {
