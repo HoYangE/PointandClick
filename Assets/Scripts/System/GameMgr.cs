@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameMgr : MonoBehaviour
 {
@@ -24,6 +25,28 @@ public class GameMgr : MonoBehaviour
 
     public static GameMgr Instance => _instance == null ? null : _instance;
 
+    #region SceneSystem
+
+    private IEnumerator _coroutine;
+    public void ChangeScene(string sceneName)
+    {
+        _coroutine = FadeUI.Instance.FadeOutCoroutine(sceneName, true);
+        StartCoroutine(_coroutine);
+    }
+    
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    
+    public void QuitGame()
+    {
+        ChangeScene("Scenes/TitleScene");
+    }
+    #endregion SceneSystem
+    
+    
+    #region PauseSystem
     public void PauseGame()
     {
         if (_isPause == false)
@@ -43,14 +66,6 @@ public class GameMgr : MonoBehaviour
         _isPause = false;
         return;
     }
-    
-    public void RestartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-    
-    public void QuitGame()
-    {
-        SceneManager.LoadScene("Scenes/TitleScene");
-    }
+    #endregion
+
 }
