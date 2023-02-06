@@ -8,6 +8,8 @@ using TMPro;
 
 public class AudioMgr : MonoBehaviour
 {
+    private static AudioMgr _instance = null;
+
     public AudioMixer audioMixer;
 
     public Slider masterSlider;
@@ -17,6 +19,23 @@ public class AudioMgr : MonoBehaviour
     public TextMeshProUGUI masterVolume;
     public TextMeshProUGUI bgmVolume;
     public TextMeshProUGUI seVolume;
+
+    public AudioSource seSound;
+
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    public static AudioMgr Instance => _instance == null ? null : _instance;
 
     public void SetMasterVolume()
     {
@@ -37,6 +56,15 @@ public class AudioMgr : MonoBehaviour
         audioMixer.SetFloat("SE", Mathf.Log10(seSlider.value) * 20);
         float _seVolume = Mathf.Floor(seSlider.value * 100);
         seVolume.text = _seVolume.ToString();
+
+        if (seSound.isPlaying)
+        {
+            return;
+        }
+        else
+        {
+            seSound.Play();
+        }
     }
 
 }
