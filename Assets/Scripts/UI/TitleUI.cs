@@ -10,7 +10,7 @@ public class TitleUI : MonoBehaviour
 
     public void StartGame()
     {
-        GameMgr.Instance.ChangeScene("Scenes/StoryBridgeScene");
+        GameMgr.Instance.ChangeScene("Scenes/Story1Scene");
     }
     public void OptionOpen()
     {
