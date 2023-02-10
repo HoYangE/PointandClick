@@ -1,16 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
+using TMPro;
+
+// 8465 262
 
 public class Story1 : MonoBehaviour
 {
+    [FormerlySerializedAs("Image")] public Sprite[] imageArray;
+    [FormerlySerializedAs("Event")] public GameObject[] eventArray;
+    public GameObject image;
+    
     public void Start()
     {
         StartCoroutine(Talk());
     }
 
+    public void ClosePopup()
+    {
+        image.SetActive(false);
+        foreach (var eventObject in eventArray)
+        {
+            if(eventObject != null)
+                eventObject.SetActive(false);
+        }
+    }
+    
     #region Start
-
     IEnumerator Talk()
     {
         var data = CSVReader.Read("Story1TextScript");
@@ -33,87 +51,321 @@ public class Story1 : MonoBehaviour
     #endregion
     
     #region Object
-    public void Object1()
+    #region Bookskelf
+    private bool _doll = false;
+    private bool _hammerItem = false;
+    private int _bookshelfLevel = 0;
+    public void Bookshelf()
     {
-        // 오른쪽 책장에 튀어나와 있는 책 클릭
-        // 오래된 종이 이미지 출력
-        // 아무 클릭이나 하면 이미지 사라짐
+        image.SetActive(true);
+        image.GetComponent<Image>().sprite = imageArray[0 + _bookshelfLevel];
+        
+        switch (_bookshelfLevel)
+        {
+            case < 3:
+                if (!_hammerItem) break;
+                eventArray[16].SetActive(true);
+                break;
+            case 3:
+                eventArray[17].SetActive(true);
+                break;
+        }
     }
-    public void Object2()
+    public void BookshelfAttack()
     {
-        // 책상 위에 올라와 있는 인형 클릭
-        // 똑똑 거리는 사운드 출력
+        if (!_hammerItem) return;
+        image.GetComponent<Image>().sprite = imageArray[0 + ++_bookshelfLevel];
+        if (_bookshelfLevel != 3) return;
+        eventArray[16].SetActive(false);
+        eventArray[17].SetActive(true);
     }
-    public void Object3()
+    public void BookshelfDoll()
     {
-        // 침대 머리 쪽 클릭
-        // "평소에 눕는 침대지만 지금은 눕고 싶지 않아."
+        image.GetComponent<Image>().sprite = imageArray[0 + ++_bookshelfLevel];
+        eventArray[17].SetActive(false);
+        _doll = true;
     }
-    public void Object4()
+    #endregion Bookskelf
+    public void Book()
     {
-        // 침대 위에 있는 인형 클릭
-        // 사운드와 침대 밑에 기괴한 손 이미지 나왔다가 사라짐
+        image.SetActive(true);
+        image.GetComponent<Image>().sprite = imageArray[5];
     }
-    public void Object5()
+    #region Table
+    private int _tableLevel = 0;
+    public void Table()
     {
-        // 떨어져 있는 책 클릭
-        // 기괴한 얼굴 이미지 나왔다가 사라짐
+        image.SetActive(true);
+        image.GetComponent<Image>().sprite = imageArray[6 + _tableLevel];
+        if(_keyItem)
+            eventArray[_tableLevel].SetActive(true);
     }
+    public void Table2Level()
+    {
+        eventArray[0].SetActive(false);
+        image.GetComponent<Image>().sprite = imageArray[6 + ++_tableLevel];
+        eventArray[1].SetActive(true);
+    }
+    public void Table3Level()
+    {
+        eventArray[1].SetActive(false);
+        _hammerItem = true;
+        image.GetComponent<Image>().sprite = imageArray[6 + ++_tableLevel];
+        
+    }
+    #endregion
+    public void Bed()
+    {
+        image.SetActive(true);
+        image.GetComponent<Image>().sprite = imageArray[11];
+    }
+    public void AnimalPoster()
+    {
+        image.SetActive(true);
+        image.GetComponent<Image>().sprite = imageArray[10];
+    }
+    public void DollAndRose()
+    {
+        image.SetActive(true);
+        image.GetComponent<Image>().sprite = imageArray[9];
+    }
+    #region LovePoster
+    private int _lovePosterLevel = 0;
+    public void LovePoster()
+    {
+        image.SetActive(true);
+        image.GetComponent<Image>().sprite = imageArray[12 + _lovePosterLevel];
+        switch (_lovePosterLevel)
+        {
+            case 0:
+                eventArray[2].SetActive(true);
+                eventArray[3].SetActive(true);
+                break;
+            case 1:
+                eventArray[2].SetActive(true);
+                break;
+            case 2:
+                eventArray[3].SetActive(true);
+                break;
+            case 3:
+                eventArray[4].SetActive(true);
+                break;
+        }
+    }
+    public void LovePosterL()
+    {
+        image.SetActive(true);
+        if(_lovePosterLevel == 0)
+            image.GetComponent<Image>().sprite = imageArray[14];
+        else
+        {
+            image.GetComponent<Image>().sprite = imageArray[15];
+            eventArray[4].SetActive(true);
+        }
+        _lovePosterLevel+=2;
+        eventArray[2].SetActive(false);
+    }
+    public void LovePosterR()
+    {
+        image.SetActive(true);
+        if(_lovePosterLevel == 0)
+            image.GetComponent<Image>().sprite = imageArray[13];
+        else
+        {
+            image.GetComponent<Image>().sprite = imageArray[15];
+            eventArray[4].SetActive(true);
+        }
+        _lovePosterLevel++;
+        eventArray[3].SetActive(false);
+    }
+    public void LovePoster2Level()
+    {
+        image.SetActive(true);
+        image.GetComponent<Image>().sprite = imageArray[12 + ++_lovePosterLevel];
+        eventArray[4].SetActive(false);
+    }
+    #endregion LovePoster
+    #region Drawer
+    private int _drawerLevel = 0;
+    private bool _keyItem = false;
+    private bool _cardItem = false;
+    public void Drawer()
+    {
+        image.SetActive(true);
+        image.GetComponent<Image>().sprite = imageArray[17 + _drawerLevel];
+        switch (_drawerLevel)
+        {
+            case 0:
+                eventArray[5].SetActive(true);
+                eventArray[6].SetActive(true);
+                break;
+            case 1:
+                eventArray[5].SetActive(true);
+                break;
+            case 2:
+                eventArray[6].SetActive(true);
+                _drawerLevel = 5;
+                image.GetComponent<Image>().sprite = imageArray[17 + _drawerLevel];
+                break;
+            case 5:
+                eventArray[14].SetActive(true);
+                break;
+            case 6:
+                eventArray[15].SetActive(true);
+                break;
+        }
+    }
+    public void DrawerLockAnimal()
+    {
+        eventArray[5].SetActive(false);
+        eventArray[6].SetActive(false);
+        image.SetActive(true);
+        image.GetComponent<Image>().sprite = imageArray[24];
+        eventArray[7].SetActive(true);
+        eventArray[8].SetActive(true);
+        eventArray[9].SetActive(true);
+    }
+    public void DrawerLockHeart()
+    {
+        eventArray[5].SetActive(false);
+        eventArray[6].SetActive(false);
+        image.SetActive(true);
+        image.GetComponent<Image>().sprite = imageArray[25];
+        eventArray[10].SetActive(true);
+        eventArray[11].SetActive(true);
+        eventArray[12].SetActive(true);
+        eventArray[13].SetActive(true);
+    }
+    private string _currentAnimalPassword = "000";
+    public void DrawerLockAnimal1()
+    {
+        var component = eventArray[7].transform.GetChild(0).GetComponent<TMP_Text>();
+        component.text = TenToZero(component.text);
+        _currentAnimalPassword = _currentAnimalPassword[..0] + component.text + _currentAnimalPassword.Substring(1, 2);
+        DrawerAnimalPassword(_currentAnimalPassword);
+    }
+    public void DrawerLockAnimal2()
+    {
+        var component = eventArray[8].transform.GetChild(0).GetComponent<TMP_Text>();
+        component.text = TenToZero(component.text);
+        _currentAnimalPassword = _currentAnimalPassword[..1] + component.text + _currentAnimalPassword.Substring(2, 1);
+        DrawerAnimalPassword(_currentAnimalPassword);
+    }
+    public void DrawerLockAnimal3()
+    {
+        var component = eventArray[9].transform.GetChild(0).GetComponent<TMP_Text>();
+        component.text = TenToZero(component.text);
+        _currentAnimalPassword = _currentAnimalPassword[..2] + component.text;
+        DrawerAnimalPassword(_currentAnimalPassword);
+    }
+    private string _currentHeartPassword = "0000";
+    public void DrawerLockHeart1()
+    {
+        var component = eventArray[10].transform.GetChild(0).GetComponent<TMP_Text>();
+        component.text = TenToZero(component.text);
+        _currentHeartPassword = _currentHeartPassword[..0] + component.text + _currentHeartPassword.Substring(1, 3);
+        DrawerAnimalPassword(_currentHeartPassword);
+    }
+    public void DrawerLockHeart2()
+    {
+        var component = eventArray[11].transform.GetChild(0).GetComponent<TMP_Text>();
+        component.text = TenToZero(component.text);
+        _currentHeartPassword = _currentHeartPassword[..1] + component.text + _currentHeartPassword.Substring(2, 2);
+        DrawerHeartPassword(_currentHeartPassword);
+    }
+    public void DrawerLockHeart3()
+    {
+        var component = eventArray[12].transform.GetChild(0).GetComponent<TMP_Text>();
+        component.text = TenToZero(component.text);
+        _currentHeartPassword = _currentHeartPassword[..2] + component.text + _currentHeartPassword.Substring(3, 1);
+        DrawerHeartPassword(_currentHeartPassword);
+    }
+    public void DrawerLockHeart4()
+    {
+        var component = eventArray[13].transform.GetChild(0).GetComponent<TMP_Text>();
+        component.text = TenToZero(component.text);
+        _currentHeartPassword = _currentHeartPassword[..3] + component.text;
+        DrawerHeartPassword(_currentHeartPassword);
+    }
+    public void DrawerAnimalItem()
+    {
+        _keyItem = true;
+        eventArray[14].SetActive(false);
+        image.SetActive(true);
+        if (!_cardItem)
+        {
+            eventArray[6].SetActive(true);
+            _drawerLevel = 2;
+        }
+        else
+            _drawerLevel = 3;
+        image.GetComponent<Image>().sprite = imageArray[17 + _drawerLevel];
+    }
+    public void DrawerHeartItem()
+    {
+        _cardItem = true;
+        eventArray[15].SetActive(false);
+        image.SetActive(true);
+        _drawerLevel = !_keyItem ? 1 : 3;
+        image.GetComponent<Image>().sprite = imageArray[26];
+        //image.GetComponent<Image>().sprite = imageArray[17 + _drawerLevel];
+    }
+    private string TenToZero(string str)
+    {
+        var temp = int.Parse(str) + 1;
+        if (temp == 10)
+            temp = 0;
+        return temp.ToString();
+    }
+    private void DrawerAnimalPassword(string str)
+    {
+        if (str != "262") return;
+        eventArray[7].SetActive(false);
+        eventArray[8].SetActive(false);
+        eventArray[9].SetActive(false);
+        image.SetActive(true);
+        if (_drawerLevel == 0)
+        {
+            eventArray[14].SetActive(true);
+            image.GetComponent<Image>().sprite = imageArray[22];
+            _drawerLevel = 5;
+        }
+        else if(_drawerLevel != 0)
+        {
+            eventArray[14].SetActive(true);
+            image.GetComponent<Image>().sprite = imageArray[22];
+            _drawerLevel = 5;
+        }
+    }
+    private void DrawerHeartPassword(string str)
+    {
+        if (str != "8465") return;
+        eventArray[10].SetActive(false);
+        eventArray[11].SetActive(false);
+        eventArray[12].SetActive(false);
+        eventArray[13].SetActive(false);
+        image.SetActive(true);
+        if (_drawerLevel == 0)
+        {
+            eventArray[15].SetActive(true);
+            image.GetComponent<Image>().sprite = imageArray[23];
+            _drawerLevel = 6;
+        }
+        else if(_drawerLevel != 0)
+        {
+            eventArray[15].SetActive(true);
+            image.GetComponent<Image>().sprite = imageArray[23];
+            _drawerLevel = 6;
+        }
+    }
+    #endregion Drawer
     #endregion Object
 
     #region Door
-    public void Door1()
+    public void Door()
     {
-        // 1번째 문 클릭
-        // "열리지 않는다. 무슨 일이지?"
-    }
-    public void Door2()
-    {
-        // 2번째 문 클릭
-        // 문 긁는 소리 출력
-    }
-    public void Door3()
-    {
-        // 3번째 문 클릭
-        // 크게 두드리는 소리 출력, 문에 피 튀기는 이미지 출력
-    }
-    public void Door4()
-    {
-        // 4번째 문 클릭
-        // 첫번째 인형 빠르게 화면 지나감
-    }
-    public void Door5()
-    {
-        // 5번째 문 클릭
-        // 문이 열리고 두번째 인형의 얼굴이 나왔다가 사라짐
+        if(_doll)
+            GameMgr.Instance.ChangeScene("Scenes/Story2Scene");
     }
     #endregion Door
-
-    #region MoreEvent
-    public void Object6()
-    {
-        // 두 번째로 책장을 클릭
-        // 알 수 없는 소리 출력
-    }
-    public void Object7()
-    {
-        // 두 번째로 책상 위 인형을 클릭
-        // 벽에 피 튀기는 이미지 출력
-    }
-    public void Object8()
-    {
-        // 두 번째로 침대 위 인형을 클릭
-        // "이 인형은 처음 보는 인형인데..."
-    }
-    public void Object9()
-    {
-        // 책상 다리 클릭 시
-        // 악 소리 출력
-    }
-    public void Object10()
-    {
-        // 두 번째로 책상 다리 클릭 시
-        // 귀신 얼굴 나왔다가 사라짐
-    }    
-    #endregion MoreEvent
 }

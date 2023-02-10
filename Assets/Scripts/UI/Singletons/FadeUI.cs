@@ -36,6 +36,8 @@ public class FadeUI : MonoBehaviour
     {
         if(SceneManager.GetActiveScene().name != "Story1Scene")
             StartCoroutine(FadeInCoroutine());
+        else
+            image.raycastTarget = true;
     }
 
     #region FadeSystem
