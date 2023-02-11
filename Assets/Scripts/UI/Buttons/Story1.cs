@@ -18,7 +18,7 @@ public class Story1 : MonoBehaviour
     
     public void Start()
     {
-        StartCoroutine(Talk());
+        //StartCoroutine(Talk());
     }
 
     public void ClosePopup()
@@ -160,7 +160,7 @@ public class Story1 : MonoBehaviour
     }
     private IEnumerator JumpScare()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.35f);
         jumpScare.SetActive(false);
         virtualCamera.GetComponent<CinemachineVirtualCamera>()
             .GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0.0f;
