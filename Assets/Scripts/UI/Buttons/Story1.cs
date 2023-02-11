@@ -18,7 +18,7 @@ public class Story1 : MonoBehaviour
     
     public void Start()
     {
-        //StartCoroutine(Talk());
+        StartCoroutine(Talk());
     }
 
     public void ClosePopup()
