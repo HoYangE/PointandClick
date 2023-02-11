@@ -78,12 +78,14 @@ public class Story1 : MonoBehaviour
         if (_bookshelfLevel != 3) return;
         eventArray[16].SetActive(false);
         eventArray[17].SetActive(true);
+        Inventory.Instance.RemoveItem(Inventory.Instance.FindItem("ChildHammer"));
     }
     public void BookshelfDoll()
     {
         image.GetComponent<Image>().sprite = imageArray[0 + ++_bookshelfLevel];
         eventArray[17].SetActive(false);
         _doll = true;
+        Inventory.Instance.AddItem(Inventory.Instance.imageList[2]);
     }
     #endregion Bookskelf
     public void Book()
@@ -102,6 +104,7 @@ public class Story1 : MonoBehaviour
     }
     public void Table2Level()
     {
+        Inventory.Instance.RemoveItem(Inventory.Instance.FindItem("ChildKey"));
         eventArray[0].SetActive(false);
         image.GetComponent<Image>().sprite = imageArray[6 + ++_tableLevel];
         eventArray[1].SetActive(true);
@@ -110,10 +113,11 @@ public class Story1 : MonoBehaviour
     {
         eventArray[1].SetActive(false);
         _hammerItem = true;
+        Inventory.Instance.AddItem(Inventory.Instance.imageList[1]);
         image.GetComponent<Image>().sprite = imageArray[6 + ++_tableLevel];
         
     }
-    #endregion
+    #endregion Table
     public void Bed()
     {
         image.SetActive(true);
@@ -193,6 +197,7 @@ public class Story1 : MonoBehaviour
     {
         image.SetActive(true);
         image.GetComponent<Image>().sprite = imageArray[17 + _drawerLevel];
+        Debug.Log(_drawerLevel);
         switch (_drawerLevel)
         {
             case 0:
@@ -204,14 +209,21 @@ public class Story1 : MonoBehaviour
                 break;
             case 2:
                 eventArray[6].SetActive(true);
-                _drawerLevel = 5;
-                image.GetComponent<Image>().sprite = imageArray[17 + _drawerLevel];
+                if (_cardItem)
+                {
+                    _drawerLevel = 5;
+                    image.GetComponent<Image>().sprite = imageArray[17 + _drawerLevel];
+                }
+                break;
+            case 3:
+                eventArray[15].SetActive(true);
                 break;
             case 5:
                 eventArray[14].SetActive(true);
                 break;
             case 6:
                 eventArray[15].SetActive(true);
+                eventArray[5].SetActive(true);
                 break;
         }
     }
@@ -290,6 +302,7 @@ public class Story1 : MonoBehaviour
     public void DrawerAnimalItem()
     {
         _keyItem = true;
+        Inventory.Instance.AddItem(Inventory.Instance.imageList[0]);
         eventArray[14].SetActive(false);
         image.SetActive(true);
         if (!_cardItem)
@@ -306,9 +319,8 @@ public class Story1 : MonoBehaviour
         _cardItem = true;
         eventArray[15].SetActive(false);
         image.SetActive(true);
-        _drawerLevel = !_keyItem ? 1 : 3;
+        _drawerLevel = !_keyItem ? 6 : 3;
         image.GetComponent<Image>().sprite = imageArray[26];
-        //image.GetComponent<Image>().sprite = imageArray[17 + _drawerLevel];
     }
     private string TenToZero(string str)
     {
@@ -327,14 +339,16 @@ public class Story1 : MonoBehaviour
         if (_drawerLevel == 0)
         {
             eventArray[14].SetActive(true);
-            image.GetComponent<Image>().sprite = imageArray[22];
             _drawerLevel = 5;
+            if(_keyItem) return;
+            image.GetComponent<Image>().sprite = imageArray[22];
         }
         else if(_drawerLevel != 0)
         {
             eventArray[14].SetActive(true);
-            image.GetComponent<Image>().sprite = imageArray[22];
             _drawerLevel = 5;
+            if(_keyItem) return;
+            image.GetComponent<Image>().sprite = imageArray[22];
         }
     }
     private void DrawerHeartPassword(string str)
@@ -364,8 +378,9 @@ public class Story1 : MonoBehaviour
     #region Door
     public void Door()
     {
-        if(_doll)
-            GameMgr.Instance.ChangeScene("Scenes/Story2Scene");
+        if (!_doll) return;
+        Inventory.Instance.AllRemoveItem();
+        GameMgr.Instance.ChangeScene("Scenes/Story2Scene");
     }
     #endregion Door
 }
