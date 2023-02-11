@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using TMPro;
+using Cinemachine;
 
 // 8465 262
 
@@ -12,6 +13,8 @@ public class Story1 : MonoBehaviour
     [FormerlySerializedAs("Image")] public Sprite[] imageArray;
     [FormerlySerializedAs("Event")] public GameObject[] eventArray;
     public GameObject image;
+    public GameObject jumpScare;
+    public GameObject virtualCamera;
     
     public void Start()
     {
@@ -128,11 +131,42 @@ public class Story1 : MonoBehaviour
         image.SetActive(true);
         image.GetComponent<Image>().sprite = imageArray[10];
     }
+    #region DollAndRose
+    private bool _jumpScare = false;
+    private static readonly int Open = Animator.StringToHash("open");
     public void DollAndRose()
     {
         image.SetActive(true);
         image.GetComponent<Image>().sprite = imageArray[9];
+        if(_jumpScare) return;
+        eventArray[18].SetActive(true);
     }
+    public void DollAndRose2()
+    {
+        _jumpScare = true;
+        eventArray[18].SetActive(false);
+        jumpScare.SetActive(true);
+        OpenJumpScare();
+    }
+    private void OpenJumpScare()
+    {
+        if (jumpScare == null) return;
+        var animator = jumpScare.transform.GetChild(2).GetComponent<Animator>();
+        if (animator == null) return;
+        animator.SetTrigger(Open);
+        StartCoroutine(JumpScare());
+        virtualCamera.GetComponent<CinemachineVirtualCamera>()
+            .GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 1.0f;
+    }
+    private IEnumerator JumpScare()
+    {
+        yield return new WaitForSeconds(1.0f);
+        jumpScare.SetActive(false);
+        virtualCamera.GetComponent<CinemachineVirtualCamera>()
+            .GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0.0f;
+        yield return null;
+    }
+    #endregion DollAndRose
     #region LovePoster
     private int _lovePosterLevel = 0;
     public void LovePoster()
