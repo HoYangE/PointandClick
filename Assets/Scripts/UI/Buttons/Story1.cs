@@ -18,7 +18,7 @@ public class Story1 : MonoBehaviour
     
     public void Start()
     {
-        //StartCoroutine(Talk());
+        StartCoroutine(Talk());
     }
 
     public void ClosePopup()
@@ -50,6 +50,17 @@ public class Story1 : MonoBehaviour
             yield return StartCoroutine(NPCTextUI.Instance.NormalChat(t["Name"].ToString(), t["Text"].ToString()));
             yield return new WaitForSeconds(float.Parse(t["Delay"].ToString()));
         }
+    }
+    IEnumerator Talk2()
+    {
+        var data = CSVReader.Read("Story1EndTextScript");
+        foreach (var t in data)
+        {
+            yield return StartCoroutine(NPCTextUI.Instance.NormalChat(t["Name"].ToString(), t["Text"].ToString()));
+            yield return new WaitForSeconds(float.Parse(t["Delay"].ToString()));
+        }
+        Inventory.Instance.AllRemoveItem();
+        GameMgr.Instance.ChangeScene("Scenes/Story3Scene");
     }
     #endregion
     
@@ -231,7 +242,6 @@ public class Story1 : MonoBehaviour
     {
         image.SetActive(true);
         image.GetComponent<Image>().sprite = imageArray[17 + _drawerLevel];
-        Debug.Log(_drawerLevel);
         switch (_drawerLevel)
         {
             case 0:
@@ -413,8 +423,7 @@ public class Story1 : MonoBehaviour
     public void Door()
     {
         if (!_doll) return;
-        Inventory.Instance.AllRemoveItem();
-        GameMgr.Instance.ChangeScene("Scenes/Story2Scene");
+        StartCoroutine(Talk2());
     }
     #endregion Door
 }
