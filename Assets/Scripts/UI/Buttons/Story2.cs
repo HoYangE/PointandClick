@@ -18,7 +18,7 @@ public class Story2 : MonoBehaviour
 
     public void Start()
     {
-        //StartCoroutine(Talk());
+        StartCoroutine(Talk());
         SetTime();
     }
 
@@ -62,7 +62,7 @@ public class Story2 : MonoBehaviour
             yield return StartCoroutine(NPCTextUI.Instance.NormalChat(t["Name"].ToString(), t["Text"].ToString()));
             yield return new WaitForSeconds(float.Parse(t["Delay"].ToString()));
         }
-
+        Inventory.Instance.AllRemoveItem();
         GameMgr.Instance.ChangeScene("Scenes/Story3Scene");
 
     }
@@ -221,7 +221,7 @@ public class Story2 : MonoBehaviour
         {
             _caseOpen = true;
             _hasEraser = true;
-            Inventory.Instance.AddItem(Inventory.Instance.imageList[4]);
+            Inventory.Instance.AddItem(Inventory.Instance.imageList[10]);
 
             CloseEvent();
         }
@@ -254,7 +254,7 @@ public class Story2 : MonoBehaviour
         else
         {
             _haskey = true;
-            Inventory.Instance.AddItem(Inventory.Instance.imageList[3]);
+            Inventory.Instance.AddItem(Inventory.Instance.imageList[9]);
             Destroy(_key);
         }
     }
@@ -381,7 +381,7 @@ bool _hasEraser;
     {
         _getDoll = true;
         _dropDoll = false;
-        Inventory.Instance.AddItem(Inventory.Instance.imageList[5]);
+        Inventory.Instance.AddItem(Inventory.Instance.imageList[11]);
         eventImage.GetComponent<Image>().sprite = imageArray[5];
         eventInteraction.transform.GetChild(5).gameObject.SetActive(false);
     }
