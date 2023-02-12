@@ -82,7 +82,7 @@ public class Inventory : MonoBehaviour
 
     private bool NoRemove(string str)
     {
-        if (str == "ChildDoll1")
+        if (str == "ChildDoll1" || str == "PassageDoll1")
             return true;
         return false;
     }
