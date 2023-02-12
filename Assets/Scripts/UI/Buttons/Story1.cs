@@ -60,7 +60,7 @@ public class Story1 : MonoBehaviour
             yield return new WaitForSeconds(float.Parse(t["Delay"].ToString()));
         }
         Inventory.Instance.AllRemoveItem();
-        GameMgr.Instance.ChangeScene("Scenes/Story3Scene");
+        GameMgr.Instance.ChangeScene("Scenes/Story2Scene");
     }
     #endregion
     
