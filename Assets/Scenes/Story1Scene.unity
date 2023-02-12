@@ -578,6 +578,18 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
+        - m_Target: {fileID: 61352527}
+          m_TargetAssemblyTypeName: ButtonCursor, Assembly-CSharp
+          m_MethodName: OutButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
         - m_Target: {fileID: 1422551724}
           m_TargetAssemblyTypeName: Story1, Assembly-CSharp
           m_MethodName: ClosePopup
@@ -7974,6 +7986,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7168d2a5e22b1824bbc9743f3f547579, type: 3}
   - {fileID: 21300000, guid: a876ed2e6e30dc5478fd07069cb354f5, type: 3}
   - {fileID: 21300000, guid: cb79a3c7556d63b40a238b44e38ca2ea, type: 3}
+  - {fileID: 21300000, guid: 7d3cead6697612b48968b789e49db4a4, type: 3}
+  - {fileID: 21300000, guid: 2e1db9834270baf4e8d2602af8f2d89f, type: 3}
+  - {fileID: 21300000, guid: aa8b661ad34994f49990896574ffa358, type: 3}
+  - {fileID: 21300000, guid: 2419656bf6b4dd142afdce1aba04ac01, type: 3}
+  - {fileID: 21300000, guid: d65539b270e53c5499bb9ae909750f87, type: 3}
+  - {fileID: 21300000, guid: e16ef6845ebef2a499df8a84bc7f51d5, type: 3}
 --- !u!114 &1862635372
 MonoBehaviour:
   m_ObjectHideFlags: 0

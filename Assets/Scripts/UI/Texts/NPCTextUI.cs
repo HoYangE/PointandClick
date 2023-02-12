@@ -32,7 +32,7 @@ public class NPCTextUI : MonoBehaviour
         characterName.outlineColor = Color.white;
         chatText.outlineColor = Color.white;
         textPanel.SetActive(false);
-        clickBlock.SetActive(false);
+        clickBlock.SetActive(true);
     }
     
     public static NPCTextUI Instance => _instance == null ? null : _instance;
