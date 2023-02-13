@@ -22,6 +22,8 @@ public class AudioMgr : MonoBehaviour
 
     public AudioSource seSound;
 
+    public GameObject option;
+    
     private void Awake()
     {
         if (_instance == null)
@@ -66,5 +68,14 @@ public class AudioMgr : MonoBehaviour
             seSound.Play();
         }
     }
-
+    
+    public void OptionOn()
+    {
+        option.SetActive(true);
+    }
+    
+    public void OptionOff()
+    {
+        option.SetActive(false);
+    }
 }

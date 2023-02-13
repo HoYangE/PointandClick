@@ -29,15 +29,15 @@ public class Story2 : MonoBehaviour
         var data = CSVReader.Read("Story2TextScript");
         foreach (var t in data)
         {
-            switch (int.Parse(t["Talk"].ToString()))
-            {
-                case 1:
-                    yield return StartCoroutine(NPCTextUI.Instance.FadeInCoroutine(0));
-                    break;
-                case 4:
-                    yield return StartCoroutine(NPCTextUI.Instance.FadeOutCoroutine(0));
-                    break;
-            }
+            // switch (int.Parse(t["Talk"].ToString()))
+            // {
+            //     case 1:
+            //         yield return StartCoroutine(NPCTextUI.Instance.FadeInCoroutine(0));
+            //         break;
+            //     case 4:
+            //         yield return StartCoroutine(NPCTextUI.Instance.FadeOutCoroutine(0));
+            //         break;
+            // }
 
             yield return StartCoroutine(NPCTextUI.Instance.NormalChat(t["Name"].ToString(), t["Text"].ToString()));
             yield return new WaitForSeconds(float.Parse(t["Delay"].ToString()));
@@ -269,8 +269,8 @@ public class Story2 : MonoBehaviour
 
 #endregion Closet
 
-#region Table
-bool _hasEraser;
+    #region Table
+    bool _hasEraser;
     bool _isErased;
 
     public void DollManual()

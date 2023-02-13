@@ -17,10 +17,6 @@ public class TitleUI : MonoBehaviour
     {
         optionPanel.SetActive(true);
     }
-    public void OptionClose()
-    {
-        optionPanel.SetActive(false);
-    }
     public void NewGame()
     {
         newGameButton.SetActive(true);

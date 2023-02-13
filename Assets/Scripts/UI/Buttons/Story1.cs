@@ -18,6 +18,7 @@ public class Story1 : MonoBehaviour
     
     public void Start()
     {
+        //StartCoroutine(FadeUI.Instance.FadeInCoroutine());
         StartCoroutine(Talk());
     }
 
@@ -39,6 +40,16 @@ public class Story1 : MonoBehaviour
         {
             switch (int.Parse(t["Talk"].ToString()))
             {
+                case 1:
+                    NPCTextUI.Instance.StartCut1();
+                    break;
+                case 4:
+                    NPCTextUI.Instance.EndCut1();
+                    NPCTextUI.Instance.StartCut2();
+                    break;
+                case 6:
+                    NPCTextUI.Instance.EndCut2();
+                    break;
                 case 7:
                     yield return StartCoroutine(NPCTextUI.Instance.FadeInCoroutine(0));
                     break;
@@ -56,6 +67,16 @@ public class Story1 : MonoBehaviour
         var data = CSVReader.Read("Story1EndTextScript");
         foreach (var t in data)
         {
+            switch (int.Parse(t["Talk"].ToString()))
+            {
+                case 1:
+                    yield return StartCoroutine(NPCTextUI.Instance.FadeInCoroutine(3));
+                    break;
+                case 3:
+                    yield return StartCoroutine(NPCTextUI.Instance.FadeOutCoroutine(3));
+                    break;
+            }
+
             yield return StartCoroutine(NPCTextUI.Instance.NormalChat(t["Name"].ToString(), t["Text"].ToString()));
             yield return new WaitForSeconds(float.Parse(t["Delay"].ToString()));
         }
