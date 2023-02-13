@@ -68,6 +68,28 @@ public class NPCTextUI : MonoBehaviour
         chatText.text = narration;
     }
 
+    public void StartCut1()
+    {
+        imageArray[1].SetActive(true);
+    }
+
+    public void EndCut1()
+    {
+        imageArray[1].SetActive(false);
+    }
+    
+    public void StartCut2()
+    {
+        imageArray[2].SetActive(true);
+        var animator = imageArray[2].transform.GetChild(1).GetComponent<Animator>();
+        animator.SetTrigger("open");
+    }
+
+    public void EndCut2()
+    {
+        imageArray[2].SetActive(false);
+    }
+
     public IEnumerator FadeInCoroutine(int index)
     {
         if (imageArray.Length < index) yield break;
