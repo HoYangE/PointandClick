@@ -20,6 +20,11 @@ public class Story3 : MonoBehaviour
     public void Start()
     {
         StartCoroutine(Talk());
+        if (Inventory.Instance.FindItem("ChildDoll1") == -1)
+            Inventory.Instance.AddItem(Inventory.Instance.imageList[2]);
+        if (Inventory.Instance.FindItem("ParentDoll1") == -1)
+            Inventory.Instance.AddItem(Inventory.Instance.imageList[11]);
+        PlayerPrefs.SetInt("Level", 3);
     }
 
     public void ClosePopup()
@@ -113,6 +118,7 @@ public class Story3 : MonoBehaviour
         eventArray[8].SetActive(false);
         image.SetActive(true);
         _ladderItem = true;
+        AudioMgr.Instance.Pickup();
         _ladderInventory = true;
         background.GetComponent<Image>().sprite = imageArray[14];
         Inventory.Instance.AddItem(Inventory.Instance.imageList[6]);
@@ -148,6 +154,7 @@ public class Story3 : MonoBehaviour
         eventArray[3].SetActive(false);
         image.SetActive(true);
         _hammerItem = true;
+        AudioMgr.Instance.Pickup();
         Inventory.Instance.AddItem(Inventory.Instance.imageList[4]);
         image.GetComponent<Image>().sprite = imageArray[11 + ++_radioLevel];
     }
@@ -172,6 +179,7 @@ public class Story3 : MonoBehaviour
     }
     public void FlowerPotDrawer2()
     {
+        AudioMgr.Instance.Glass_crack();
         eventArray[4].SetActive(false);
         image.SetActive(true);
         image.GetComponent<Image>().sprite = imageArray[8 + ++_flowerPotDrawerLevel];
@@ -183,6 +191,7 @@ public class Story3 : MonoBehaviour
         eventArray[5].SetActive(false);
         image.SetActive(true);
         _knifeItem = true;
+        AudioMgr.Instance.Pickup();
         Inventory.Instance.AddItem(Inventory.Instance.imageList[5]);
         image.GetComponent<Image>().sprite = imageArray[8 + ++_flowerPotDrawerLevel];
     }
@@ -212,6 +221,7 @@ public class Story3 : MonoBehaviour
     }
     public void CardDrawer3()
     {
+        AudioMgr.Instance.Clue();
         eventArray[1].SetActive(false);
         image.GetComponent<Image>().sprite = imageArray[4];
         image.SetActive(true);
@@ -260,18 +270,19 @@ public class Story3 : MonoBehaviour
             ladder[1].SetActive(false);
             ladder[0].SetActive(true);
             _ladderInventory = false;
+            AudioMgr.Instance.Put_object();
             if(!_paintingItem)
                 ladder[2].SetActive(true);
             else if(_mirrorItem)
                 ladder[4].SetActive(true);
-            if (_paintingItem && _mirrorItem)
-                background.GetComponent<Image>().sprite = imageArray[19];
-            else if (_paintingItem && !_mirrorItem)
-                background.GetComponent<Image>().sprite = imageArray[22];
-            else if (!_paintingItem && _mirrorItem)
-                background.GetComponent<Image>().sprite = imageArray[18];
-            else if (!_paintingItem && !_mirrorItem)
-                background.GetComponent<Image>().sprite = imageArray[21];
+            background.GetComponent<Image>().sprite = _paintingItem switch
+            {
+                true when _mirrorItem => imageArray[19],
+                true when !_mirrorItem => imageArray[22],
+                false when _mirrorItem => imageArray[18],
+                false when !_mirrorItem => imageArray[21],
+                _ => background.GetComponent<Image>().sprite
+            };
         }
         else
         {
@@ -279,15 +290,16 @@ public class Story3 : MonoBehaviour
             ladder[1].SetActive(true);
             ladder[0].SetActive(true);
             ladder[2].SetActive(false);
+            AudioMgr.Instance.Pickup();
             _ladderInventory = true;
-            if(_paintingItem && _mirrorItem)
-                background.GetComponent<Image>().sprite = imageArray[27];
-            else if(_paintingItem && !_mirrorItem)
-                background.GetComponent<Image>().sprite = imageArray[23];
-            else if(!_paintingItem && _mirrorItem)
-                background.GetComponent<Image>().sprite = imageArray[17];
-            else if(!_paintingItem && !_mirrorItem)
-                background.GetComponent<Image>().sprite = imageArray[14];
+            background.GetComponent<Image>().sprite = _paintingItem switch
+            {
+                true when _mirrorItem => imageArray[27],
+                true when !_mirrorItem => imageArray[23],
+                false when _mirrorItem => imageArray[17],
+                false when !_mirrorItem => imageArray[14],
+                _ => background.GetComponent<Image>().sprite
+            };
         }
     }
     public void MirrorLadder()
@@ -297,17 +309,18 @@ public class Story3 : MonoBehaviour
             Inventory.Instance.RemoveItem(Inventory.Instance.FindItem("PassageLadder"));
             ladder[0].SetActive(false);
             ladder[1].SetActive(true);
+            AudioMgr.Instance.Put_object();
             if(!_mirrorItem)
                 ladder[3].SetActive(true);
             _ladderInventory = false;
-            if (_paintingItem && _mirrorItem)
-                background.GetComponent<Image>().sprite = imageArray[25];
-            else if (_paintingItem && !_mirrorItem)
-                background.GetComponent<Image>().sprite = imageArray[24];
-            else if (!_paintingItem && _mirrorItem)
-                background.GetComponent<Image>().sprite = imageArray[16];
-            else if (!_paintingItem && !_mirrorItem)
-                background.GetComponent<Image>().sprite = imageArray[15];
+            background.GetComponent<Image>().sprite = _paintingItem switch
+            {
+                true when _mirrorItem => imageArray[25],
+                true when !_mirrorItem => imageArray[24],
+                false when _mirrorItem => imageArray[16],
+                false when !_mirrorItem => imageArray[15],
+                _ => background.GetComponent<Image>().sprite
+            };
         }
         else
         {
@@ -315,15 +328,16 @@ public class Story3 : MonoBehaviour
             ladder[0].SetActive(true);
             ladder[1].SetActive(true);
             ladder[3].SetActive(false);
+            AudioMgr.Instance.Pickup();
             _ladderInventory = true;
-            if(_paintingItem && _mirrorItem)
-                background.GetComponent<Image>().sprite = imageArray[27];
-            else if(_paintingItem && !_mirrorItem)
-                background.GetComponent<Image>().sprite = imageArray[23];
-            else if(!_paintingItem && _mirrorItem)
-                background.GetComponent<Image>().sprite = imageArray[17];
-            else if(!_paintingItem && !_mirrorItem)
-                background.GetComponent<Image>().sprite = imageArray[14];
+            background.GetComponent<Image>().sprite = _paintingItem switch
+            {
+                true when _mirrorItem => imageArray[27],
+                true when !_mirrorItem => imageArray[23],
+                false when _mirrorItem => imageArray[17],
+                false when !_mirrorItem => imageArray[14],
+                _ => background.GetComponent<Image>().sprite
+            };
         }
     }
     #endregion Ladder
@@ -337,6 +351,7 @@ public class Story3 : MonoBehaviour
         jumpScare.SetActive(true);
         OpenJumpScare();
         _doll = true;
+        AudioMgr.Instance.Suddenly();
     }
     private void OpenJumpScare()
     {
@@ -362,7 +377,12 @@ public class Story3 : MonoBehaviour
     #region Door
     public void Door()
     {
-        if (!_doll) return;
+        if (!_doll)
+        {
+            AudioMgr.Instance.Lock();
+            return;
+        }
+        AudioMgr.Instance.Door_open();
         StartCoroutine(Talk2());
     }
     #endregion Door

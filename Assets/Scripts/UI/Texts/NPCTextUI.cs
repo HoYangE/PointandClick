@@ -28,11 +28,11 @@ public class NPCTextUI : MonoBehaviour
 
     private void Start()
     {
-        characterName.outlineWidth = 0.1f;
-        chatText.outlineWidth = 0.1f;
+        characterName.outlineWidth = 0.05f;
+        chatText.outlineWidth = 0.05f;
         characterName.outlineColor = Color.white;
         chatText.outlineColor = Color.white;
-        textPanel.SetActive(false);
+        //textPanel.SetActive(false);
         clickBlock.SetActive(true);
     }
     
@@ -64,8 +64,8 @@ public class NPCTextUI : MonoBehaviour
             if (_skip)
                 break;
         }
-
-        chatText.text = narration;
+        chatText.text = narration; 
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
     }
 
     public void StartCut1()
@@ -148,7 +148,9 @@ public class NPCTextUI : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
+        {
             _skip = true;
+        }
     }
 }

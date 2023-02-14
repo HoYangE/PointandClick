@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: ElevenWar
   productName: PointandClick
   defaultCursor: {fileID: 2800000, guid: 7d51dd212190e6d469d874b2f86f0b51, type: 3}
   cursorHotspot: {x: 0, y: 0}
@@ -153,7 +153,8 @@ PlayerSettings:
   resetResolutionOnWindowResize: 0
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
-  applicationIdentifier: {}
+  applicationIdentifier:
+    Standalone: com.ElevenWar.PointandClick
   buildNumber:
     Standalone: 0
     iPhone: 0

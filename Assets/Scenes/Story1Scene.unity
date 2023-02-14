@@ -3950,7 +3950,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 853263618}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4113,15 +4113,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1f113f2306adef84bb9cf4aa8ee41ac2, type: 2}
-  m_sharedMaterial: {fileID: -8872225802801691430, guid: 1f113f2306adef84bb9cf4aa8ee41ac2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6c22f272102572d43a6cf7436a7687c9, type: 2}
+  m_sharedMaterial: {fileID: 1766098259057159639, guid: 6c22f272102572d43a6cf7436a7687c9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4835,6 +4835,156 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1072797657}
+  m_CullTransparentMesh: 1
+--- !u!1 &1099115700
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1099115701}
+  - component: {fileID: 1099115704}
+  - component: {fileID: 1099115703}
+  - component: {fileID: 1099115702}
+  m_Layer: 5
+  m_Name: LovePoster3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1099115701
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099115700}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.1954907, y: 0.56481004, z: 1.0001595}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1416566991}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 280.97, y: 8.42}
+  m_SizeDelta: {x: 437.82, y: 1068.03}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1099115702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099115700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 646515463}
+          m_TargetAssemblyTypeName: ButtonCursor, Assembly-CSharp
+          m_MethodName: OnButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 646515463}
+          m_TargetAssemblyTypeName: ButtonCursor, Assembly-CSharp
+          m_MethodName: OutButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 646515463}
+          m_TargetAssemblyTypeName: ButtonCursor, Assembly-CSharp
+          m_MethodName: OutButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1422551724}
+          m_TargetAssemblyTypeName: Story1, Assembly-CSharp
+          m_MethodName: LovePoster3Level
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1099115703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099115700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0.32452828, b: 0.32452828, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1099115704
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099115700}
   m_CullTransparentMesh: 1
 --- !u!1 &1102434279
 GameObject:
@@ -6246,6 +6396,7 @@ RectTransform:
   - {fileID: 1646737830}
   - {fileID: 1450554482}
   - {fileID: 1040580124}
+  - {fileID: 1099115701}
   - {fileID: 1751396757}
   - {fileID: 1172740950}
   - {fileID: 812926798}
@@ -6393,7 +6544,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b21d7c4c65b47ce4386a52f17c96101e, type: 3}
   - {fileID: 21300000, guid: 33f97ed831410f045bcc75d2974c3443, type: 3}
   - {fileID: 21300000, guid: 558bb8f9a959997439d81a01612e13cf, type: 3}
-  - {fileID: 21300000, guid: 2d583c52991288942b42e7c9f32ea72a, type: 3}
+  - {fileID: 21300000, guid: ca791ec1ab7a4ac44bbc9bc45f548172, type: 3}
   - {fileID: 21300000, guid: 3d907494bfded874eac36d8a0e0a6d40, type: 3}
   - {fileID: 21300000, guid: c2b90af003825c44693b0b4b4b21241b, type: 3}
   - {fileID: 21300000, guid: 109ec48fe2390d94f8b8a816902a8c19, type: 3}
@@ -6424,6 +6575,7 @@ MonoBehaviour:
   - {fileID: 1172740949}
   - {fileID: 812926797}
   - {fileID: 367678183}
+  - {fileID: 1099115700}
   image: {fileID: 1416566988}
   jumpScare: {fileID: 436519977}
   virtualCamera: {fileID: 360154268}
@@ -8480,15 +8632,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC548\uB155\uD558\uC138\uC694"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1f113f2306adef84bb9cf4aa8ee41ac2, type: 2}
-  m_sharedMaterial: {fileID: -8872225802801691430, guid: 1f113f2306adef84bb9cf4aa8ee41ac2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6c22f272102572d43a6cf7436a7687c9, type: 2}
+  m_sharedMaterial: {fileID: 1766098259057159639, guid: 6c22f272102572d43a6cf7436a7687c9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
