@@ -62,7 +62,7 @@ public class Story1 : MonoBehaviour
             }
 
             yield return StartCoroutine(NPCTextUI.Instance.NormalChat(t["Name"].ToString(), t["Text"].ToString()));
-            yield return new WaitForSeconds(float.Parse(t["Delay"].ToString()));
+            //yield return new WaitForSeconds(float.Parse(t["Delay"].ToString()));
         }
     }
     IEnumerator Talk2()
