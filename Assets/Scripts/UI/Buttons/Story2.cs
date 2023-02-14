@@ -52,10 +52,10 @@ public class Story2 : MonoBehaviour
             switch (int.Parse(t["Talk"].ToString()))
             {
                 case 1:
-                    yield return StartCoroutine(NPCTextUI.Instance.FadeInCoroutine(0));
+                    yield return StartCoroutine(NPCTextUI.Instance.FadeInCoroutine(1));
                     break;
                 case 9:
-                    yield return StartCoroutine(NPCTextUI.Instance.FadeOutCoroutine(0));
+                    yield return StartCoroutine(NPCTextUI.Instance.FadeOutCoroutine(1));
                     break;
             }
 
@@ -87,12 +87,15 @@ public class Story2 : MonoBehaviour
 
         eventImage.SetActive(false);
         backButton.SetActive(false);
+        _drawer1Open = false;
+        _drawer2Open = false;
     }
 
     #region Drawer
     bool _drawer1Open;
     bool _drawer2Open;
     bool _caseOpen;
+    bool _firstOpen;
 
     public TextMeshProUGUI Lock1;
     public TextMeshProUGUI Lock2;
@@ -101,7 +104,6 @@ public class Story2 : MonoBehaviour
 
     public void Drawer1()
     {
-        //_drawer2Open = true ? eventImage.GetComponent<Image>().sprite = imageArray[8] : eventImage.GetComponent<Image>().sprite = imageArray[6];
         if (_drawer2Open)
         {
             eventImage.GetComponent<Image>().sprite = imageArray[8];
@@ -123,16 +125,29 @@ public class Story2 : MonoBehaviour
         {
             return;
         }
-        else if (_drawer1Open)
+        else if (_drawer1Open && !_firstOpen)
         {
+            _firstOpen = true;
             Inventory.Instance.RemoveItem(Inventory.Instance.FindItem("ParentKey"));
+            eventImage.GetComponent<Image>().sprite = imageArray[8];
+            eventInteraction.transform.GetChild(6).gameObject.SetActive(true);
+            eventInteraction.transform.GetChild(7).gameObject.SetActive(true);
+        }
+        else if (!_drawer1Open && !_firstOpen)
+        {
+            _firstOpen = true;
+            Inventory.Instance.RemoveItem(Inventory.Instance.FindItem("ParentKey"));
+            eventImage.GetComponent<Image>().sprite = imageArray[7];
+            eventInteraction.transform.GetChild(7).gameObject.SetActive(true);
+        }
+        else if(_drawer1Open && _firstOpen)
+        {
             eventImage.GetComponent<Image>().sprite = imageArray[8];
             eventInteraction.transform.GetChild(6).gameObject.SetActive(true);
             eventInteraction.transform.GetChild(7).gameObject.SetActive(true);
         }
         else
         {
-            Inventory.Instance.RemoveItem(Inventory.Instance.FindItem("ParentKey"));
             eventImage.GetComponent<Image>().sprite = imageArray[7];
             eventInteraction.transform.GetChild(7).gameObject.SetActive(true);
         }
@@ -306,49 +321,72 @@ public class Story2 : MonoBehaviour
     public TextMeshProUGUI Hour;
     public TextMeshProUGUI Minute;
 
-    float _minute = 30;
-    float _hour = 2;
+    int _minute = 30;
+    int _hour = 2;
 
     bool _dropDoll;
 
-    public void IncreaseMinute()
+    /*    public void IncreaseMinute()
+        {
+            _minute = _minute == 55 ? 0 : _minute + 5;
+
+            SetTime();
+        }
+
+        public void DecreaseMinute()
+        {
+            _minute = _minute == 0 ? 55 : _minute - 5;
+            SetTime();
+        }
+
+        public void IncreaseHour()
+        {
+            _hour = _hour == 12 ? 1 : _hour + 1;
+            SetTime();
+        }
+
+        public void DecreaseHour()
+        {
+            _hour = _hour == 1 ? 12 : _hour - 1;
+            SetTime();
+        }*/
+
+    public void IncreaseTime(string type)
     {
-        _minute = _minute == 55 ? 0 : _minute + 5;
+        if (type == "minute")
+        {
+            _minute =_minute == 55 ? 0 : _minute + 5;
+        }
+        else if (type == "hour")
+        {
+            _hour =_hour == 12 ? 1 : _hour + 1;
+        }
 
         SetTime();
     }
 
-    public void DecreaseMinute()
+    public void DecreaseTime(string type)
     {
-        _minute = _minute == 0 ? 55 : _minute - 5;
-        SetTime();
-    }
+        if (type == "minute")
+        {
+            _minute = _minute == 0 ? 55 : _minute - 5;
+        }
+        else if (type == "hour")
+        {
+            _hour = _hour == 1 ? 12 : _hour - 1;
+        }
 
-    public void IncreaseHour()
-    {
-        _hour = _hour == 12 ? 1 : _hour + 1;
-        SetTime();
-    }
-
-    public void DecreaseHour()
-    {
-        _hour = _hour == 1 ? 12 : _hour - 1;
         SetTime();
     }
 
     void SetTime()
     {
-        _minute = (_minute / 60f) * 360f;
-        _hour = (_hour / 12f) * 360f;
 
-        MinuteHand.localRotation = Quaternion.Euler(0f, 0f, -_minute);
-        HourHand.localRotation = Quaternion.Euler(0f, 0f, -_hour);
+        MinuteHand.localRotation = Quaternion.Euler(0f, 0f, -_minute * 6);
+        HourHand.localRotation = Quaternion.Euler(0f, 0f, -_hour *30);
 
-        _minute = (_minute / 360f) * 60f;
-        _hour = (_hour / 360f) * 12f;
-
-        Hour.text = _hour < 10 ? "0" + _hour.ToString() : _hour.ToString();
-        Minute.text = _minute < 10 ? "0" + _minute.ToString() : _minute.ToString();
+        Hour.text = string.Format("{0:D2}", _hour);
+        Minute.text = string.Format("{0:D2}", _minute);
 
         if (_minute == 0 && _hour == 12)
         {
