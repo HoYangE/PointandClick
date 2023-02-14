@@ -64,10 +64,8 @@ public class NPCTextUI : MonoBehaviour
             if (_skip)
                 break;
         }
-
-        chatText.text = narration;
-        if (Time.timeScale != 0)
-            Time.timeScale = 0;
+        chatText.text = narration; 
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
     }
 
     public void StartCut1()
@@ -140,11 +138,9 @@ public class NPCTextUI : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             _skip = true;
-            if (Time.timeScale == 0)
-                Time.timeScale = 1;
         }
     }
 }
