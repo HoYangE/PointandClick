@@ -9,6 +9,7 @@ public class TitleUI : MonoBehaviour
     public GameObject optionPanel;
     public GameObject newGameButton;
     public GameObject exitButton;
+    public GameObject credit;
     public GameObject[] button;
     public Sprite[] buttonImage;
 
@@ -16,10 +17,12 @@ public class TitleUI : MonoBehaviour
     public void OptionOpen()
     {
         optionPanel.SetActive(true);
+        AudioMgr.Instance.ButtonClick();
     }
     public void NewGame()
     {
         newGameButton.SetActive(true);
+        AudioMgr.Instance.ButtonClick();
     }
     public void NewGameStart()
     {
@@ -45,6 +48,31 @@ public class TitleUI : MonoBehaviour
     {
         button[1].GetComponent<Image>().sprite = buttonImage[2];
     }
+    public void Continue()
+    {
+        if (PlayerPrefs.HasKey("Level"))
+        {
+            switch (PlayerPrefs.GetInt("Level"))
+            {
+                case 1:
+                    GameMgr.Instance.ChangeScene("Scenes/Story1Scene");
+                    break;
+                case 2:
+                    GameMgr.Instance.ChangeScene("Scenes/Story2Scene");
+                    break;
+                case 3:
+                    GameMgr.Instance.ChangeScene("Scenes/Story3Scene");
+                    break;
+                case 4:
+                    GameMgr.Instance.ChangeScene("Scenes/Story4Scene");
+                    break;
+            }
+        }
+        else
+        {
+            NewGameStart();
+        }
+    }
     public void SettingOn()
     {
         button[2].GetComponent<Image>().sprite = buttonImage[5];
@@ -61,9 +89,18 @@ public class TitleUI : MonoBehaviour
     {
         button[3].GetComponent<Image>().sprite = buttonImage[6];
     }
+    public void Credit()
+    {
+        credit.SetActive(true);
+    }
+    public void CreditClose()
+    {
+        credit.SetActive(false);
+    }
     public void ExitStart()
     {
         exitButton.SetActive(true);
+        AudioMgr.Instance.ButtonClick();
     }
     public void ExitClose()
     {

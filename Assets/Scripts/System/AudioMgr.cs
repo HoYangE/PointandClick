@@ -20,10 +20,11 @@ public class AudioMgr : MonoBehaviour
     public TextMeshProUGUI bgmVolume;
     public TextMeshProUGUI seVolume;
 
-    public AudioSource seSound;
-
     public GameObject option;
-    
+
+    public AudioSource seSound;
+    public AudioClip[] seClip;
+
     private void Awake()
     {
         if (_instance == null)
@@ -58,16 +59,74 @@ public class AudioMgr : MonoBehaviour
         audioMixer.SetFloat("SE", Mathf.Log10(seSlider.value) * 20);
         float _seVolume = Mathf.Floor(seSlider.value * 100);
         seVolume.text = _seVolume.ToString();
-
-        if (seSound.isPlaying)
-        {
-            return;
-        }
-        else
-        {
-            seSound.Play();
-        }
+        seSound.clip = seClip[0];
+        
+        if (seSound.isPlaying) return;
+        seSound.Play();
     }
+
+    #region Clip
+    public void ButtonClick()
+    {
+        seSound.clip = seClip[0];
+        seSound.Play();
+    }
+    
+    public void Clue()
+    {
+        seSound.clip = seClip[1];
+        seSound.Play();
+    }
+    
+    public void Door_open()
+    {
+        seSound.clip = seClip[2];
+        seSound.Play();
+    }
+    
+    public void Glass_crack()
+    {
+        seSound.clip = seClip[3];
+        seSound.Play();
+    }
+
+    public void Hammer()
+    {
+        seSound.clip = seClip[4];
+        seSound.Play();
+    }
+    
+    public void Lock()
+    {
+        seSound.clip = seClip[5];
+        seSound.Play();
+    }
+    
+    public void Pickup()
+    {
+        seSound.clip = seClip[6];
+        seSound.Play();
+    }
+    
+    public void Put_object()
+    {
+        seSound.clip = seClip[7];
+        seSound.Play();
+    }
+    
+    public void Suddenly()
+    {
+        seSound.clip = seClip[8];
+        seSound.Play();
+    }
+    
+    public void Unlock()
+    {
+        seSound.clip = seClip[9];
+        seSound.Play();
+    }
+    #endregion
+    
     
     public void OptionOn()
     {

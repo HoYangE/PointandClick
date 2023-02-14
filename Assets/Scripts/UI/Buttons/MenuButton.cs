@@ -9,6 +9,7 @@ public class MenuButton : MonoBehaviour
 
     public void OpenMenu()
     {
+        AudioMgr.Instance.ButtonClick();
         menu.SetActive(true);
     }
     public void CloseMenu()
@@ -18,11 +19,13 @@ public class MenuButton : MonoBehaviour
 
     public void Setting()
     {
+        AudioMgr.Instance.ButtonClick();
         AudioMgr.Instance.OptionOn();
     }
 
     public void Main()
     {
+        AudioMgr.Instance.ButtonClick();
         Destroy(setting);
         GameMgr.Instance.ChangeScene("Scenes/TitleScene");
     }
