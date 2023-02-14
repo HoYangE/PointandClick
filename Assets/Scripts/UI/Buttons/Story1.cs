@@ -20,6 +20,7 @@ public class Story1 : MonoBehaviour
     {
         //StartCoroutine(FadeUI.Instance.FadeInCoroutine());
         StartCoroutine(Talk());
+        PlayerPrefs.SetInt("Level", 1);
     }
 
     public void ClosePopup()
@@ -30,6 +31,8 @@ public class Story1 : MonoBehaviour
             if(eventObject != null)
                 eventObject.SetActive(false);
         }
+        _animalOpen = false;
+        _heartOpen = false;
     }
     
     #region Start
@@ -109,6 +112,7 @@ public class Story1 : MonoBehaviour
     public void BookshelfAttack()
     {
         if (!_hammerItem) return;
+        AudioMgr.Instance.Hammer();
         image.GetComponent<Image>().sprite = imageArray[0 + ++_bookshelfLevel];
         if (_bookshelfLevel != 3) return;
         eventArray[16].SetActive(false);
@@ -120,6 +124,7 @@ public class Story1 : MonoBehaviour
         image.GetComponent<Image>().sprite = imageArray[0 + ++_bookshelfLevel];
         eventArray[17].SetActive(false);
         _doll = true;
+        AudioMgr.Instance.Pickup();
         Inventory.Instance.AddItem(Inventory.Instance.imageList[2]);
     }
     #endregion Bookskelf
@@ -134,11 +139,19 @@ public class Story1 : MonoBehaviour
     {
         image.SetActive(true);
         image.GetComponent<Image>().sprite = imageArray[6 + _tableLevel];
-        if(_keyItem)
-            eventArray[_tableLevel].SetActive(true);
+        eventArray[_tableLevel].SetActive(true);
     }
     public void Table2Level()
     {
+        if (_keyItem)
+        {
+            AudioMgr.Instance.Unlock();
+        }
+        else
+        {
+            AudioMgr.Instance.Lock();
+            return;
+        }
         Inventory.Instance.RemoveItem(Inventory.Instance.FindItem("ChildKey"));
         eventArray[0].SetActive(false);
         image.GetComponent<Image>().sprite = imageArray[6 + ++_tableLevel];
@@ -148,9 +161,9 @@ public class Story1 : MonoBehaviour
     {
         eventArray[1].SetActive(false);
         _hammerItem = true;
+        AudioMgr.Instance.Pickup();
         Inventory.Instance.AddItem(Inventory.Instance.imageList[1]);
         image.GetComponent<Image>().sprite = imageArray[6 + ++_tableLevel];
-        
     }
     #endregion Table
     public void Bed()
@@ -178,6 +191,7 @@ public class Story1 : MonoBehaviour
         _jumpScare = true;
         eventArray[18].SetActive(false);
         jumpScare.SetActive(true);
+        AudioMgr.Instance.Suddenly();
         OpenJumpScare();
     }
     private void OpenJumpScare()
@@ -251,21 +265,33 @@ public class Story1 : MonoBehaviour
     public void LovePoster2Level()
     {
         image.SetActive(true);
-        image.GetComponent<Image>().sprite = imageArray[12 + ++_lovePosterLevel];
+        image.GetComponent<Image>().sprite = imageArray[16];
         eventArray[4].SetActive(false);
+        eventArray[19].SetActive(true);
+    }
+    public void LovePoster3Level()
+    {
+        image.SetActive(true);
+        image.GetComponent<Image>().sprite = imageArray[15];
+        eventArray[19].SetActive(false);
+        eventArray[4].SetActive(true);
     }
     #endregion LovePoster
     #region Drawer
     private int _drawerLevel = 0;
+    private bool _animalLock = true;
+    private bool _heartLock = true;
+    private bool _animalOpen = false;
+    private bool _heartOpen = false;
     private bool _keyItem = false;
     private bool _cardItem = false;
     public void Drawer()
     {
         image.SetActive(true);
-        image.GetComponent<Image>().sprite = imageArray[17 + _drawerLevel];
+        image.GetComponent<Image>().sprite = imageArray[17];
         switch (_drawerLevel)
         {
-            case 0:
+            case 0 or 3 or 5 or 6:
                 eventArray[5].SetActive(true);
                 eventArray[6].SetActive(true);
                 break;
@@ -273,6 +299,7 @@ public class Story1 : MonoBehaviour
                 eventArray[5].SetActive(true);
                 break;
             case 2:
+                eventArray[5].SetActive(true);
                 eventArray[6].SetActive(true);
                 if (_cardItem)
                 {
@@ -280,38 +307,78 @@ public class Story1 : MonoBehaviour
                     image.GetComponent<Image>().sprite = imageArray[17 + _drawerLevel];
                 }
                 break;
-            case 3:
-                eventArray[15].SetActive(true);
-                break;
-            case 5:
-                eventArray[14].SetActive(true);
-                break;
-            case 6:
-                eventArray[15].SetActive(true);
-                eventArray[5].SetActive(true);
-                break;
         }
     }
     public void DrawerLockAnimal()
     {
         eventArray[5].SetActive(false);
-        eventArray[6].SetActive(false);
-        image.SetActive(true);
-        image.GetComponent<Image>().sprite = imageArray[24];
-        eventArray[7].SetActive(true);
-        eventArray[8].SetActive(true);
-        eventArray[9].SetActive(true);
+        _animalOpen = true;
+        if (_animalLock)
+        {
+            AudioMgr.Instance.Lock();
+            eventArray[15].SetActive(false);
+            eventArray[6].SetActive(false);
+            image.SetActive(true);
+            image.GetComponent<Image>().sprite = imageArray[24];
+            eventArray[7].SetActive(true);
+            eventArray[8].SetActive(true);
+            eventArray[9].SetActive(true);
+        }
+        else
+        {
+            if (!_keyItem)
+            {
+                image.GetComponent<Image>().sprite = imageArray[22];
+                eventArray[14].SetActive(true);
+            }
+            else
+            {
+                image.GetComponent<Image>().sprite = imageArray[19];
+            }
+            
+            if (_heartOpen)
+            {
+                image.GetComponent<Image>().sprite = imageArray[20];
+                if(!_keyItem)
+                    image.GetComponent<Image>().sprite = imageArray[21];
+            }
+            else
+            {
+                eventArray[6].SetActive(true);
+            }
+        }
     }
     public void DrawerLockHeart()
     {
-        eventArray[5].SetActive(false);
-        eventArray[6].SetActive(false);
         image.SetActive(true);
-        image.GetComponent<Image>().sprite = imageArray[25];
-        eventArray[10].SetActive(true);
-        eventArray[11].SetActive(true);
-        eventArray[12].SetActive(true);
-        eventArray[13].SetActive(true);
+        eventArray[6].SetActive(false);
+        _heartOpen = true;
+        if (_heartLock)
+        {
+            AudioMgr.Instance.Lock();
+            eventArray[5].SetActive(false);
+            eventArray[10].SetActive(true);
+            eventArray[11].SetActive(true);
+            eventArray[12].SetActive(true);
+            eventArray[13].SetActive(true);
+            eventArray[14].SetActive(false);
+            image.GetComponent<Image>().sprite = imageArray[25];
+        }
+        else
+        {
+            eventArray[15].SetActive(true);
+            image.GetComponent<Image>().sprite = imageArray[23];
+            if (_animalOpen)
+            {
+                image.GetComponent<Image>().sprite = imageArray[20];
+                if(!_keyItem)
+                    image.GetComponent<Image>().sprite = imageArray[21];
+            }
+            else
+            {
+                eventArray[5].SetActive(true);
+            }
+        }
     }
     private string _currentAnimalPassword = "000";
     public void DrawerLockAnimal1()
@@ -367,22 +434,27 @@ public class Story1 : MonoBehaviour
     public void DrawerAnimalItem()
     {
         _keyItem = true;
+        AudioMgr.Instance.Pickup();
         Inventory.Instance.AddItem(Inventory.Instance.imageList[0]);
         eventArray[14].SetActive(false);
         image.SetActive(true);
-        if (!_cardItem)
+
+        if (_heartOpen)
         {
-            eventArray[6].SetActive(true);
-            _drawerLevel = 2;
+            image.GetComponent<Image>().sprite = imageArray[20];
         }
         else
-            _drawerLevel = 3;
-        image.GetComponent<Image>().sprite = imageArray[17 + _drawerLevel];
+        {
+            image.GetComponent<Image>().sprite = imageArray[19];
+            eventArray[6].SetActive(true);
+        }
     }
     public void DrawerHeartItem()
     {
         _cardItem = true;
-        eventArray[15].SetActive(false);
+        AudioMgr.Instance.Clue();
+        eventArray[15].SetActive(false);    
+        eventArray[5].SetActive(false);
         image.SetActive(true);
         _drawerLevel = !_keyItem ? 6 : 3;
         image.GetComponent<Image>().sprite = imageArray[26];
@@ -397,44 +469,47 @@ public class Story1 : MonoBehaviour
     private void DrawerAnimalPassword(string str)
     {
         if (str != "262") return;
+        AudioMgr.Instance.Unlock();
+        _animalLock = false;
+        _animalOpen = true;
         eventArray[7].SetActive(false);
         eventArray[8].SetActive(false);
         eventArray[9].SetActive(false);
         image.SetActive(true);
-        if (_drawerLevel == 0)
+        eventArray[14].SetActive(true);
+        image.GetComponent<Image>().sprite = imageArray[22];
+        if (_heartOpen)
         {
-            eventArray[14].SetActive(true);
-            _drawerLevel = 5;
-            if(_keyItem) return;
-            image.GetComponent<Image>().sprite = imageArray[22];
+            eventArray[15].SetActive(true);
+            image.GetComponent<Image>().sprite = _keyItem ? imageArray[20] : imageArray[21];
         }
-        else if(_drawerLevel != 0)
+        else
         {
-            eventArray[14].SetActive(true);
-            _drawerLevel = 5;
-            if(_keyItem) return;
-            image.GetComponent<Image>().sprite = imageArray[22];
+            eventArray[6].SetActive(true);
         }
     }
     private void DrawerHeartPassword(string str)
     {
         if (str != "8465") return;
+        AudioMgr.Instance.Unlock();
+        _heartLock = false;
+        _heartOpen = true;
         eventArray[10].SetActive(false);
         eventArray[11].SetActive(false);
         eventArray[12].SetActive(false);
         eventArray[13].SetActive(false);
         image.SetActive(true);
-        if (_drawerLevel == 0)
+        eventArray[15].SetActive(true);
+        image.GetComponent<Image>().sprite = imageArray[23];
+        if (_animalOpen)
         {
-            eventArray[15].SetActive(true);
-            image.GetComponent<Image>().sprite = imageArray[23];
-            _drawerLevel = 6;
+            if(!_keyItem)
+                eventArray[14].SetActive(true);
+            image.GetComponent<Image>().sprite = _keyItem ? imageArray[20] : imageArray[21];
         }
-        else if(_drawerLevel != 0)
+        else
         {
-            eventArray[15].SetActive(true);
-            image.GetComponent<Image>().sprite = imageArray[23];
-            _drawerLevel = 6;
+            eventArray[5].SetActive(true);
         }
     }
     #endregion Drawer
@@ -443,7 +518,12 @@ public class Story1 : MonoBehaviour
     #region Door
     public void Door()
     {
-        if (!_doll) return;
+        if (!_doll)
+        {
+            AudioMgr.Instance.Lock();
+            return;
+        }
+        AudioMgr.Instance.Door_open();
         StartCoroutine(Talk2());
     }
     #endregion Door

@@ -20,6 +20,9 @@ public class Story2 : MonoBehaviour
     {
         StartCoroutine(Talk());
         SetTime();
+        if (Inventory.Instance.FindItem("ChildDoll1") == -1)
+            Inventory.Instance.AddItem(Inventory.Instance.imageList[2]);
+        PlayerPrefs.SetInt("Level", 2);
     }
 
     #region Start

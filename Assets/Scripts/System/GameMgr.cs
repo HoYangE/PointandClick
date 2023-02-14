@@ -12,6 +12,7 @@ public class GameMgr : MonoBehaviour
     
     private void Awake()
     {
+        Screen.SetResolution(1920, 1080, true);
         if (_instance == null)
         {
             _instance = this;
