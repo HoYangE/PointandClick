@@ -100,6 +100,23 @@ public class NPCTextUI : MonoBehaviour
         imageArray[0].SetActive(false);
     }
 
+    public IEnumerator EndCutSceneStory1()
+    {
+        var fadeCount = 1.0f;
+        FadeUI.Instance.image.raycastTarget = true;
+        GameMgr.Instance.PauseGame();
+        while (fadeCount > 0.0f)
+        {
+            fadeCount -= 0.01f;
+            yield return new WaitForSecondsRealtime(0.01f);
+            FadeUI.Instance.image.color = new Color(0, 0, 0, fadeCount);
+        }
+        GameMgr.Instance.ContinueGame();
+        FadeUI.Instance.image.raycastTarget = false;
+
+        yield return StartCoroutine(FadeOutCoroutine(0));
+    }
+
     public IEnumerator FadeInCoroutine(int index)
     {
         if (imageArray.Length < index) yield break;
@@ -123,7 +140,7 @@ public class NPCTextUI : MonoBehaviour
             _fadeCoroutine = Coroutine(index, i, false);
             StartCoroutine(_fadeCoroutine);        
         }
-        StartCoroutine(FadeUI.Instance.FadeInCoroutine());
+        //StartCoroutine(FadeUI.Instance.FadeInCoroutine());
     }
 
     private IEnumerator Coroutine(int index,int i,bool isIn)

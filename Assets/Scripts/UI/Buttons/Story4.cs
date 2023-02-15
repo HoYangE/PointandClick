@@ -27,10 +27,13 @@ public class Story4 : MonoBehaviour
         PlayerPrefs.SetInt("Level", 4);
         AudioMgr.Instance.bgmSound.clip = AudioMgr.Instance.bgmClip[1];
         AudioMgr.Instance.bgmSound.Play();
+        NPCTextUI.Instance.gameObject.SetActive(false);
     }
 
     IEnumerator Talk()
     {
+        yield return new WaitForSeconds(1f);
+        NPCTextUI.Instance.gameObject.SetActive(true);
         var data = CSVReader.Read("Story4TextScript");
         foreach (var t in data)
         {
