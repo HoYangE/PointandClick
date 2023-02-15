@@ -25,12 +25,15 @@ public class Story2 : MonoBehaviour
         PlayerPrefs.SetInt("Level", 2);
         AudioMgr.Instance.bgmSound.clip = AudioMgr.Instance.bgmClip[1];
         AudioMgr.Instance.bgmSound.Play();
+        NPCTextUI.Instance.gameObject.SetActive(false);
     }
 
     #region Start
 
     IEnumerator Talk()
     {
+        yield return new WaitForSeconds(0.5f);
+        NPCTextUI.Instance.gameObject.SetActive(true);
         var data = CSVReader.Read("Story2TextScript");
         foreach (var t in data)
         {

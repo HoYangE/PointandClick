@@ -58,7 +58,7 @@ public class Story1 : MonoBehaviour
                     yield return StartCoroutine(NPCTextUI.Instance.FadeInCoroutine(0));
                     break;
                 case 10:
-                    yield return StartCoroutine(NPCTextUI.Instance.FadeOutCoroutine(0));
+                    yield return StartCoroutine(NPCTextUI.Instance.EndCutSceneStory1());
                     break;
             }
 

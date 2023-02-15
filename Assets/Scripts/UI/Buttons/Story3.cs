@@ -27,6 +27,7 @@ public class Story3 : MonoBehaviour
         PlayerPrefs.SetInt("Level", 3);
         AudioMgr.Instance.bgmSound.clip = AudioMgr.Instance.bgmClip[1];
         AudioMgr.Instance.bgmSound.Play();
+        NPCTextUI.Instance.gameObject.SetActive(false);
     }
 
     public void ClosePopup()
@@ -46,6 +47,8 @@ public class Story3 : MonoBehaviour
     #region Start
     IEnumerator Talk()
     {
+        yield return new WaitForSeconds(0.5f);
+        NPCTextUI.Instance.gameObject.SetActive(true);
         var data = CSVReader.Read("Story3TextScript");
         foreach (var t in data)
         {
