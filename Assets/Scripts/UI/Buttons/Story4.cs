@@ -22,7 +22,7 @@ public class Story4 : MonoBehaviour
             Inventory.Instance.AddItem(Inventory.Instance.imageList[2]);
         if (Inventory.Instance.FindItem("ParentDoll1") == -1)
             Inventory.Instance.AddItem(Inventory.Instance.imageList[11]);
-        if (Inventory.Instance.FindItem("PassageDoll") == -1)
+        if (Inventory.Instance.FindItem("PassageDoll1") == -1)
             Inventory.Instance.AddItem(Inventory.Instance.imageList[8]);
         PlayerPrefs.SetInt("Level", 4);
         AudioMgr.Instance.bgmSound.clip = AudioMgr.Instance.bgmClip[1];
