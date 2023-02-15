@@ -54,6 +54,21 @@ public class Inventory : MonoBehaviour
         component.color = Color.clear;
         component.sprite = null;
     }
+
+    public void RemoveDoll(int index)
+    {
+        if (index > inventoryImage.Count) return;
+        inventoryImage.RemoveAt(index);
+        for (var i = index; i < inventoryImage.Count; i++)
+        {
+            var image = inventoryButton[i].GetComponent<Image>();
+            image.color = Color.white;
+            image.sprite = inventoryImage[i];
+        }
+        var component = inventoryButton[inventoryImage.Count].GetComponent<Image>();
+        component.color = Color.clear;
+        component.sprite = null;
+    }
     public int FindItem(string str)
     {
         for(var i = 0;i<inventoryImage.Count;i++)

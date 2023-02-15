@@ -90,6 +90,16 @@ public class NPCTextUI : MonoBehaviour
         imageArray[2].SetActive(false);
     }
 
+    public void StartCut3()
+    {
+        imageArray[0].SetActive(true);
+    }
+
+    public void EndCut3()
+    {
+        imageArray[0].SetActive(false);
+    }
+
     public IEnumerator FadeInCoroutine(int index)
     {
         if (imageArray.Length < index) yield break;

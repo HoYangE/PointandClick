@@ -55,10 +55,10 @@ public class Story2 : MonoBehaviour
             switch (int.Parse(t["Talk"].ToString()))
             {
                 case 1:
-                    yield return StartCoroutine(NPCTextUI.Instance.FadeInCoroutine(0));
+                    yield return StartCoroutine(NPCTextUI.Instance.FadeInCoroutine(1));
                     break;
                 case 9:
-                    yield return StartCoroutine(NPCTextUI.Instance.FadeOutCoroutine(0));
+                    yield return StartCoroutine(NPCTextUI.Instance.FadeOutCoroutine(1));
                     break;
             }
 
@@ -67,6 +67,7 @@ public class Story2 : MonoBehaviour
         }
         Inventory.Instance.AllRemoveItem();
         GameMgr.Instance.ChangeScene("Scenes/Story3Scene");
+        AudioMgr.Instance.Door_open();
 
     }
     #endregion
@@ -90,12 +91,15 @@ public class Story2 : MonoBehaviour
 
         eventImage.SetActive(false);
         backButton.SetActive(false);
+        _drawer1Open = false;
+        _drawer2Open = false;
     }
 
     #region Drawer
     bool _drawer1Open;
     bool _drawer2Open;
     bool _caseOpen;
+    bool _firstOpen;
 
     public TextMeshProUGUI Lock1;
     public TextMeshProUGUI Lock2;
@@ -104,7 +108,6 @@ public class Story2 : MonoBehaviour
 
     public void Drawer1()
     {
-        //_drawer2Open = true ? eventImage.GetComponent<Image>().sprite = imageArray[8] : eventImage.GetComponent<Image>().sprite = imageArray[6];
         if (_drawer2Open)
         {
             eventImage.GetComponent<Image>().sprite = imageArray[8];
@@ -124,18 +127,34 @@ public class Story2 : MonoBehaviour
     {
         if (!_haskey)
         {
+            AudioMgr.Instance.Lock();
             return;
         }
-        else if (_drawer1Open)
+        else if (_drawer1Open && !_firstOpen)
         {
+            AudioMgr.Instance.Unlock();
+            _firstOpen = true;
             Inventory.Instance.RemoveItem(Inventory.Instance.FindItem("ParentKey"));
+            eventImage.GetComponent<Image>().sprite = imageArray[8];
+            eventInteraction.transform.GetChild(6).gameObject.SetActive(true);
+            eventInteraction.transform.GetChild(7).gameObject.SetActive(true);
+        }
+        else if (!_drawer1Open && !_firstOpen)
+        {
+            AudioMgr.Instance.Unlock();
+            _firstOpen = true;
+            Inventory.Instance.RemoveItem(Inventory.Instance.FindItem("ParentKey"));
+            eventImage.GetComponent<Image>().sprite = imageArray[7];
+            eventInteraction.transform.GetChild(7).gameObject.SetActive(true);
+        }
+        else if(_drawer1Open && _firstOpen)
+        {
             eventImage.GetComponent<Image>().sprite = imageArray[8];
             eventInteraction.transform.GetChild(6).gameObject.SetActive(true);
             eventInteraction.transform.GetChild(7).gameObject.SetActive(true);
         }
         else
         {
-            Inventory.Instance.RemoveItem(Inventory.Instance.FindItem("ParentKey"));
             eventImage.GetComponent<Image>().sprite = imageArray[7];
             eventInteraction.transform.GetChild(7).gameObject.SetActive(true);
         }
@@ -145,6 +164,7 @@ public class Story2 : MonoBehaviour
 
     public void Card()
     {
+        AudioMgr.Instance.Clue();
         eventInteraction.transform.GetChild(0).gameObject.SetActive(false);
         eventImage.GetComponent<Image>().sprite = imageArray[9];
     }
@@ -153,6 +173,7 @@ public class Story2 : MonoBehaviour
     {
         if (!_caseOpen)
         {
+            AudioMgr.Instance.Lock();
             eventInteraction.transform.GetChild(0).gameObject.SetActive(false);
             eventInteraction.transform.GetChild(8).gameObject.SetActive(true);
             eventImage.GetComponent<Image>().sprite = imageArray[10];
@@ -226,6 +247,7 @@ public class Story2 : MonoBehaviour
             _hasEraser = true;
             Inventory.Instance.AddItem(Inventory.Instance.imageList[10]);
 
+            AudioMgr.Instance.Unlock();
             CloseEvent();
         }
     }
@@ -247,6 +269,7 @@ public class Story2 : MonoBehaviour
     {
         if (!_popUpHand)
         {
+            AudioMgr.Instance.Suddenly();
             _horrorHand.SetActive(true);
             _horrorHand.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, 0);
             _popUpHand = true;
@@ -256,6 +279,7 @@ public class Story2 : MonoBehaviour
         }
         else
         {
+            AudioMgr.Instance.Pickup();
             _haskey = true;
             Inventory.Instance.AddItem(Inventory.Instance.imageList[9]);
             Destroy(_key);
@@ -278,6 +302,7 @@ public class Story2 : MonoBehaviour
 
     public void DollManual()
     {
+        AudioMgr.Instance.Clue();
         if (_isErased)
         {
             eventImage.GetComponent<Image>().sprite = imageArray[12];
@@ -309,49 +334,94 @@ public class Story2 : MonoBehaviour
     public TextMeshProUGUI Hour;
     public TextMeshProUGUI Minute;
 
-    float _minute = 30;
-    float _hour = 2;
+    int _minute = 30;
+    int _hour = 2;
 
     bool _dropDoll;
 
-    public void IncreaseMinute()
-    {
-        _minute = _minute == 55 ? 0 : _minute + 5;
+    /*    public void IncreaseMinute()
+        {
+            _minute = _minute == 55 ? 0 : _minute + 5;
 
+            SetTime();
+        }
+
+        public void DecreaseMinute()
+        {
+            _minute = _minute == 0 ? 55 : _minute - 5;
+            SetTime();
+        }
+
+        public void IncreaseHour()
+        {
+            _hour = _hour == 12 ? 1 : _hour + 1;
+            SetTime();
+        }
+
+        public void DecreaseHour()
+        {
+            _hour = _hour == 1 ? 12 : _hour - 1;
+            SetTime();
+        }*/
+
+    public void IncreaseTime(string type)
+    {
+        switch (type)
+        {
+            case "minute5":
+                _minute = _minute >= 55 ? 0 : + 5;
+                break;
+
+            case "minute10":
+                _minute = _minute >= 50 ? 0 : + 10;
+                break;
+
+            case "hour1":
+                _hour = _hour >= 12 ? 1 : _hour + 1;
+                break;
+
+            case "hour10":
+                _hour = _hour <= 2 ? +10 : -2; 
+                break;
+        }
+        Debug.Log(_minute);
+        Debug.Log(_hour);
         SetTime();
     }
 
-    public void DecreaseMinute()
+    public void DecreaseTime(string type)
     {
-        _minute = _minute == 0 ? 55 : _minute - 5;
-        SetTime();
-    }
+        switch (type)
+        {
+            case "minute5":
+                _minute = _minute <= 0 ? 55 : _minute - 5;
+                break;
 
-    public void IncreaseHour()
-    {
-        _hour = _hour == 12 ? 1 : _hour + 1;
-        SetTime();
-    }
+            case "minute10":
+                _minute = _minute <= 0 ? 0 : -10;
+                break;
 
-    public void DecreaseHour()
-    {
-        _hour = _hour == 1 ? 12 : _hour - 1;
+            case "hour1":
+                _hour = _hour <= 1 ? 12 : _hour - 1;
+                break;
+
+            case "hour10":
+                _hour = _hour > 10 ? -10 : -10 ;
+                break;
+        }
+        Debug.Log(_minute);
+        Debug.Log(_hour);
         SetTime();
     }
 
     void SetTime()
     {
-        _minute = (_minute / 60f) * 360f;
-        _hour = (_hour / 12f) * 360f;
 
-        MinuteHand.localRotation = Quaternion.Euler(0f, 0f, -_minute);
-        HourHand.localRotation = Quaternion.Euler(0f, 0f, -_hour);
+        MinuteHand.localRotation = Quaternion.Euler(0f, 0f, -_minute * 6);
+        HourHand.localRotation = Quaternion.Euler(0f, 0f, -_hour *30);
 
-        _minute = (_minute / 360f) * 60f;
-        _hour = (_hour / 360f) * 12f;
-
-        Hour.text = _hour < 10 ? "0" + _hour.ToString() : _hour.ToString();
-        Minute.text = _minute < 10 ? "0" + _minute.ToString() : _minute.ToString();
+        Hour.text = string.Format("{0:D2}", _hour);
+        Minute.text = string.Format("{0:D2}", _minute);
 
         if (_minute == 0 && _hour == 12)
         {
@@ -382,6 +452,7 @@ public class Story2 : MonoBehaviour
     }
     public void Doll()
     {
+        AudioMgr.Instance.Pickup();
         _getDoll = true;
         _dropDoll = false;
         Inventory.Instance.AddItem(Inventory.Instance.imageList[11]);
