@@ -18,11 +18,13 @@ public class Story4 : MonoBehaviour
     void Start()
     {
         StartCoroutine(Talk());
+        Debug.Log(Inventory.Instance.imageList[0].name);
+        Debug.Log(Inventory.Instance.imageList[1].name);
+        Debug.Log(Inventory.Instance.imageList[2].name);
     }
 
     IEnumerator Talk()
     {
-        yield return new WaitForSeconds(1f);
 
         var data = CSVReader.Read("Story4TextScript");
         foreach (var t in data)
@@ -107,23 +109,45 @@ public class Story4 : MonoBehaviour
     #region Ground
 
     public GameObject Dolls;
+    bool _setDoll1;
+    bool _setDoll2;
+    bool _setDoll3;
 
     public void SetDoll1()
     {
-        Dolls.transform.GetChild(0).gameObject.SetActive(true);
-        CheckDoll();
+        if (!_setDoll1)
+        {
+            _setDoll1 = true;
+            AudioMgr.Instance.Put_object();
+            Inventory.Instance.RemoveDoll(Inventory.Instance.FindItem("ChildDoll1"));
+            Dolls.transform.GetChild(0).gameObject.SetActive(true);
+            CheckDoll();
+        }
+
     }
 
     public void SetDoll2()
     {
-        Dolls.transform.GetChild(2).gameObject.SetActive(true);
-        CheckDoll();
+        if (!_setDoll2)
+        {
+            _setDoll2 = true;
+            Inventory.Instance.RemoveDoll(Inventory.Instance.FindItem("ParentDoll1"));
+            AudioMgr.Instance.Put_object();
+            Dolls.transform.GetChild(2).gameObject.SetActive(true);
+            CheckDoll();
+        }
     }
 
     public void SetDoll3()
     {
-        Dolls.transform.GetChild(1).gameObject.SetActive(true);
-        CheckDoll();
+        if (!_setDoll3)
+        {
+            _setDoll3 = true;
+            Inventory.Instance.RemoveDoll(Inventory.Instance.FindItem("PassageDoll1"));
+            AudioMgr.Instance.Put_object();
+            Dolls.transform.GetChild(1).gameObject.SetActive(true);
+            CheckDoll();
+        }
     }
 
     public void CheckDoll()
