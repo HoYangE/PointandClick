@@ -20,6 +20,7 @@ public class Story1 : MonoBehaviour
     {
         //StartCoroutine(FadeUI.Instance.FadeInCoroutine());
         StartCoroutine(Talk());
+        Inventory.Instance.gameObject.SetActive(true);
         PlayerPrefs.SetInt("Level", 1);
     }
 
