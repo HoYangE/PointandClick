@@ -788,6 +788,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1804053700}
+        m_TargetAssemblyTypeName: ButtonCursor, Assembly-CSharp
+        m_MethodName: OutButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &257945350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1456,6 +1468,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1804053700}
+        m_TargetAssemblyTypeName: ButtonCursor, Assembly-CSharp
+        m_MethodName: OutButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &337132295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1995,6 +2019,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1285450473}
         m_TargetAssemblyTypeName: Story2, Assembly-CSharp
         m_MethodName: EraseDollManual
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1804053700}
+        m_TargetAssemblyTypeName: ButtonCursor, Assembly-CSharp
+        m_MethodName: OutButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2686,6 +2722,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1285450473}
         m_TargetAssemblyTypeName: Story2, Assembly-CSharp
         m_MethodName: DollManual
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1804053700}
+        m_TargetAssemblyTypeName: ButtonCursor, Assembly-CSharp
+        m_MethodName: OutButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6207,6 +6255,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1804053700}
+        m_TargetAssemblyTypeName: ButtonCursor, Assembly-CSharp
+        m_MethodName: OutButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &983783769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7518,6 +7578,8 @@ MonoBehaviour:
   Lock2: {fileID: 2005399467}
   Lock3: {fileID: 462496551}
   Lock4: {fileID: 143275244}
+  drawerCard: {fileID: 936197001}
+  pencilCase: {fileID: 1131128382}
   _horrorHand: {fileID: 163552163}
   _key: {fileID: 257945347}
   HourHand: {fileID: 1068796875}
@@ -7656,6 +7718,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1285450473}
         m_TargetAssemblyTypeName: Story2, Assembly-CSharp
         m_MethodName: Doll
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1804053700}
+        m_TargetAssemblyTypeName: ButtonCursor, Assembly-CSharp
+        m_MethodName: OutButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9368,6 +9442,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1804053700}
+          m_TargetAssemblyTypeName: ButtonCursor, Assembly-CSharp
+          m_MethodName: OutButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &1639736640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10148,6 +10234,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1804053700}
+        m_TargetAssemblyTypeName: ButtonCursor, Assembly-CSharp
+        m_MethodName: OutButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1813967338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10893,6 +10991,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1285450473}
         m_TargetAssemblyTypeName: Story2, Assembly-CSharp
         m_MethodName: Drawer1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1804053700}
+        m_TargetAssemblyTypeName: ButtonCursor, Assembly-CSharp
+        m_MethodName: OutButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

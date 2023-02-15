@@ -22,7 +22,9 @@ public class AudioMgr : MonoBehaviour
 
     public GameObject option;
 
+    public AudioSource bgmSound;
     public AudioSource seSound;
+    public AudioClip[] bgmClip;
     public AudioClip[] seClip;
 
     private void Awake()
