@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,22 @@ public class TitleUI : MonoBehaviour
     public GameObject credit;
     public GameObject[] button;
     public Sprite[] buttonImage;
+    public GameObject warning;
+
+    private void Start()
+    {
+        StartCoroutine(Warning());
+    }
+
+    IEnumerator Warning()
+    {
+        warning.SetActive(true);
+        AudioMgr.Instance.bgmSound.Stop();
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+        AudioMgr.Instance.bgmSound.clip = AudioMgr.Instance.bgmClip[0];
+        AudioMgr.Instance.bgmSound.Play();
+        warning.SetActive(false);
+    }
 
     #region Menu
     public void OptionOpen()

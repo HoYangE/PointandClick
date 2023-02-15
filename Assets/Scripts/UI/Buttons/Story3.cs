@@ -25,6 +25,8 @@ public class Story3 : MonoBehaviour
         if (Inventory.Instance.FindItem("ParentDoll1") == -1)
             Inventory.Instance.AddItem(Inventory.Instance.imageList[11]);
         PlayerPrefs.SetInt("Level", 3);
+        AudioMgr.Instance.bgmSound.clip = AudioMgr.Instance.bgmClip[1];
+        AudioMgr.Instance.bgmSound.Play();
     }
 
     public void ClosePopup()
@@ -48,7 +50,6 @@ public class Story3 : MonoBehaviour
         foreach (var t in data)
         {
             yield return StartCoroutine(NPCTextUI.Instance.NormalChat(t["Name"].ToString(), t["Text"].ToString()));
-            yield return new WaitForSeconds(float.Parse(t["Delay"].ToString()));
         }
     }
     IEnumerator Talk2()
@@ -57,7 +58,6 @@ public class Story3 : MonoBehaviour
         foreach (var t in data)
         {
             yield return StartCoroutine(NPCTextUI.Instance.NormalChat(t["Name"].ToString(), t["Text"].ToString()));
-            yield return new WaitForSeconds(float.Parse(t["Delay"].ToString()));
         }
         Inventory.Instance.AllRemoveItem();
         GameMgr.Instance.ChangeScene("Scenes/Story4Scene");

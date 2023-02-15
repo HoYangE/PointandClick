@@ -18,14 +18,19 @@ public class Story4 : MonoBehaviour
     void Start()
     {
         StartCoroutine(Talk());
-        Debug.Log(Inventory.Instance.imageList[0].name);
-        Debug.Log(Inventory.Instance.imageList[1].name);
-        Debug.Log(Inventory.Instance.imageList[2].name);
+        if (Inventory.Instance.FindItem("ChildDoll1") == -1)
+            Inventory.Instance.AddItem(Inventory.Instance.imageList[2]);
+        if (Inventory.Instance.FindItem("ParentDoll1") == -1)
+            Inventory.Instance.AddItem(Inventory.Instance.imageList[11]);
+        if (Inventory.Instance.FindItem("PassageDoll") == -1)
+            Inventory.Instance.AddItem(Inventory.Instance.imageList[8]);
+        PlayerPrefs.SetInt("Level", 4);
+        AudioMgr.Instance.bgmSound.clip = AudioMgr.Instance.bgmClip[1];
+        AudioMgr.Instance.bgmSound.Play();
     }
 
     IEnumerator Talk()
     {
-
         var data = CSVReader.Read("Story4TextScript");
         foreach (var t in data)
         {
@@ -41,7 +46,6 @@ public class Story4 : MonoBehaviour
             }
 
             yield return StartCoroutine(NPCTextUI.Instance.NormalChat(t["Name"].ToString(), t["Text"].ToString()));
-            yield return new WaitForSeconds(float.Parse(t["Delay"].ToString()));
         }
     }
 
@@ -74,9 +78,9 @@ public class Story4 : MonoBehaviour
             }
 
             yield return StartCoroutine(NPCTextUI.Instance.NormalChat(t["Name"].ToString(), t["Text"].ToString()));
-            yield return new WaitForSeconds(float.Parse(t["Delay"].ToString()));
         }
 
+        Time.timeScale = 1;
         yield return new WaitForSeconds(1f);
         NPCTextUI.Instance.imageArray[4].SetActive(true);
         StartCoroutine(NPCTextUI.Instance.FadeOutCoroutine(3));
@@ -93,6 +97,7 @@ public class Story4 : MonoBehaviour
         backButton.SetActive(true);
         eventImage.GetComponent<Image>().sprite = imageArray[eventNumber];
         eventInteraction.transform.GetChild(eventNumber).gameObject.SetActive(true);
+        Dolls.SetActive(true);
     }
 
     public void CloseEvent()
@@ -104,6 +109,7 @@ public class Story4 : MonoBehaviour
 
         eventImage.SetActive(false);
         backButton.SetActive(false);
+        Dolls.SetActive(false);
     }
 
     #region Ground
@@ -121,6 +127,7 @@ public class Story4 : MonoBehaviour
             AudioMgr.Instance.Put_object();
             Inventory.Instance.RemoveDoll(Inventory.Instance.FindItem("ChildDoll1"));
             Dolls.transform.GetChild(0).gameObject.SetActive(true);
+            eventInteraction.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
             CheckDoll();
         }
 
@@ -134,6 +141,7 @@ public class Story4 : MonoBehaviour
             Inventory.Instance.RemoveDoll(Inventory.Instance.FindItem("ParentDoll1"));
             AudioMgr.Instance.Put_object();
             Dolls.transform.GetChild(2).gameObject.SetActive(true);
+            eventInteraction.transform.GetChild(0).transform.GetChild(1).gameObject.SetActive(false);
             CheckDoll();
         }
     }
@@ -146,6 +154,7 @@ public class Story4 : MonoBehaviour
             Inventory.Instance.RemoveDoll(Inventory.Instance.FindItem("PassageDoll1"));
             AudioMgr.Instance.Put_object();
             Dolls.transform.GetChild(1).gameObject.SetActive(true);
+            eventInteraction.transform.GetChild(0).transform.GetChild(2).gameObject.SetActive(false);
             CheckDoll();
         }
     }

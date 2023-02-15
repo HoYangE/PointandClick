@@ -23,6 +23,8 @@ public class Story2 : MonoBehaviour
         if (Inventory.Instance.FindItem("ChildDoll1") == -1)
             Inventory.Instance.AddItem(Inventory.Instance.imageList[2]);
         PlayerPrefs.SetInt("Level", 2);
+        AudioMgr.Instance.bgmSound.clip = AudioMgr.Instance.bgmClip[1];
+        AudioMgr.Instance.bgmSound.Play();
     }
 
     #region Start
@@ -32,18 +34,7 @@ public class Story2 : MonoBehaviour
         var data = CSVReader.Read("Story2TextScript");
         foreach (var t in data)
         {
-            // switch (int.Parse(t["Talk"].ToString()))
-            // {
-            //     case 1:
-            //         yield return StartCoroutine(NPCTextUI.Instance.FadeInCoroutine(0));
-            //         break;
-            //     case 4:
-            //         yield return StartCoroutine(NPCTextUI.Instance.FadeOutCoroutine(0));
-            //         break;
-            // }
-
             yield return StartCoroutine(NPCTextUI.Instance.NormalChat(t["Name"].ToString(), t["Text"].ToString()));
-            yield return new WaitForSeconds(float.Parse(t["Delay"].ToString()));
         }
     }
 
@@ -52,18 +43,7 @@ public class Story2 : MonoBehaviour
         var data = CSVReader.Read("Story2ClearTextScript");
         foreach (var t in data)
         {
-            switch (int.Parse(t["Talk"].ToString()))
-            {
-                case 1:
-                    yield return StartCoroutine(NPCTextUI.Instance.FadeInCoroutine(1));
-                    break;
-                case 9:
-                    yield return StartCoroutine(NPCTextUI.Instance.FadeOutCoroutine(1));
-                    break;
-            }
-
             yield return StartCoroutine(NPCTextUI.Instance.NormalChat(t["Name"].ToString(), t["Text"].ToString()));
-            yield return new WaitForSeconds(float.Parse(t["Delay"].ToString()));
         }
         Inventory.Instance.AllRemoveItem();
         GameMgr.Instance.ChangeScene("Scenes/Story3Scene");
@@ -162,9 +142,13 @@ public class Story2 : MonoBehaviour
         _drawer2Open = true;
     }
 
+    public GameObject drawerCard;
+    public GameObject pencilCase;
     public void Card()
     {
         AudioMgr.Instance.Clue();
+        drawerCard.SetActive(false);
+        pencilCase.SetActive(false);
         eventInteraction.transform.GetChild(0).gameObject.SetActive(false);
         eventImage.GetComponent<Image>().sprite = imageArray[9];
     }
@@ -174,11 +158,12 @@ public class Story2 : MonoBehaviour
         if (!_caseOpen)
         {
             AudioMgr.Instance.Lock();
+            drawerCard.SetActive(false);
+            pencilCase.SetActive(false);
             eventInteraction.transform.GetChild(0).gameObject.SetActive(false);
             eventInteraction.transform.GetChild(8).gameObject.SetActive(true);
             eventImage.GetComponent<Image>().sprite = imageArray[10];
         }
-
     }
 
     int _lock1 = 0;
@@ -369,23 +354,52 @@ public class Story2 : MonoBehaviour
         switch (type)
         {
             case "minute5":
-                _minute = _minute >= 55 ? 0 : + 5;
+                if(_minute >= 55)
+                    _minute = 0;
+                else
+                    _minute += 5;
                 break;
 
             case "minute10":
-                _minute = _minute >= 50 ? 0 : + 10;
+                switch (_minute)
+                {
+                    case >= 55:
+                        _minute = 5;
+                        break;
+                    case >= 50:
+                        _minute = 0;
+                        break;
+                    default:
+                        _minute += 10;
+                        break;
+                }
                 break;
 
             case "hour1":
-                _hour = _hour >= 12 ? 1 : _hour + 1;
+                if(_hour >= 12)
+                    _hour = 1;
+                else
+                    _hour += 1;
                 break;
 
             case "hour10":
-                _hour = _hour <= 2 ? +10 : -2; 
+                switch (_hour)
+                {
+                    case >= 12:
+                        _hour = 2;
+                        break;
+                    case >= 11:
+                        _hour = 1;
+                        break;
+                    case >= 3 and <= 9:
+                        _hour -= 2;
+                        break;
+                    default:
+                        _hour += 10;
+                        break;
+                }
                 break;
         }
-        Debug.Log(_minute);
-        Debug.Log(_hour);
         SetTime();
     }
 
@@ -394,23 +408,49 @@ public class Story2 : MonoBehaviour
         switch (type)
         {
             case "minute5":
-                _minute = _minute <= 0 ? 55 : _minute - 5;
+                if(_minute <= 0)
+                    _minute = 55;
+                else
+                    _minute -= 5;
                 break;
 
             case "minute10":
-                _minute = _minute <= 0 ? 0 : -10;
+                switch (_minute)
+                {
+                    case <= 0:
+                        _minute = 50;
+                        break;
+                    case <= 5:
+                        _minute = 55;
+                        break;
+                    default:
+                        _minute -= 10;
+                        break;
+                }
                 break;
 
             case "hour1":
-                _hour = _hour <= 1 ? 12 : _hour - 1;
+                if(_hour <= 1)
+                    _hour = 12;
+                else
+                    _hour -= 1;
                 break;
 
             case "hour10":
-                _hour = _hour > 10 ? -10 : -10 ;
+                switch (_hour)
+                {
+                    case 12 or 11:
+                        _hour = 1;
+                        break;
+                    case >= 3 and <= 9:
+                        _hour += 2;
+                        break;
+                    default:
+                        _hour += 10;
+                        break;
+                }
                 break;
         }
-        Debug.Log(_minute);
-        Debug.Log(_hour);
         SetTime();
     }
 
