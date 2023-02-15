@@ -33,6 +33,10 @@ public class TitleUI : MonoBehaviour
     #region Menu
     public void OptionOpen()
     {
+        if (optionPanel == null)
+        {
+            optionPanel = GameObject.Find("AudioManager").transform.GetChild(2).GetChild(0).gameObject;
+        }
         optionPanel.SetActive(true);
         AudioMgr.Instance.ButtonClick();
     }
