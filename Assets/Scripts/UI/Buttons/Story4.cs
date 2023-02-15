@@ -187,6 +187,6 @@ public class Story4 : MonoBehaviour
 
     public void GoTitle()
     {
-        GameMgr.Instance.ChangeScene("Scenes/TitleScene");
+        SceneManager.LoadScene("Scenes/TitleScene");
     }
 }
